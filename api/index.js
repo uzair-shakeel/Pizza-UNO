@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path"); // Import the path module
 const userRoutes = require("./routes/userRoutes");
+const categoryRoutes = require("./routes/categoryRoute");
 const foodRoutes = require("./routes/foodRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const cartRoutes = require("./routes/cartRoutes");
@@ -86,7 +87,8 @@ function checkFileType(file, cb) {
 
 // Routes
 app.use("/user", userRoutes);
-// app.use("/food", foodRoutes);
+app.use("/category", categoryRoutes);
+app.use("/food", foodRoutes);
 // app.use("/order", orderRoutes);
 // app.use("/cart", cartRoutes);
 

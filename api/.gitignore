@@ -5,13 +5,11 @@
 /.pnp
 .pnp.js
 /controllers/cartControllers.js
-/controllers/foodController.js
 /controllers/orderController.js
 /models/cartSchema.js
 /models/orderSchema.js
-/models/foodSchema.js
 /routes/cartRoutes.js
-/routes/foodRoutes.js
+
 /routes/orderRoutes.js
 
 # testing
