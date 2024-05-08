@@ -89,7 +89,7 @@ function checkFileType(file, cb) {
 app.use("/user", userRoutes);
 app.use("/category", categoryRoutes);
 app.use("/food", foodRoutes);
-// app.use("/order", orderRoutes);
+app.use("/order", orderRoutes);
 // app.use("/cart", cartRoutes);
 
 // Start the server

@@ -5,12 +5,8 @@
 /.pnp
 .pnp.js
 /controllers/cartControllers.js
-/controllers/orderController.js
 /models/cartSchema.js
-/models/orderSchema.js
 /routes/cartRoutes.js
-
-/routes/orderRoutes.js
 
 # testing
 /coverage
