@@ -12,6 +12,7 @@ const {
   getTopRatedFood,
   getEliteFood,
   getFoodBySearch,
+  getFoodByCategory,
 } = require("../controllers/foodController");
 const { protect, verifyAdmin } = require("../middleware/authMiddleware");
 
@@ -38,5 +39,8 @@ router.put("/:foodId", protect, verifyAdmin, updateFoodById);
 
 // Delete a specific food item by ID
 router.delete("/:foodId", protect, verifyAdmin, deleteFoodById);
+
+// route for getting food items by category
+router.get("/category/:category", getFoodByCategory);
 
 module.exports = router;

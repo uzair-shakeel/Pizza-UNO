@@ -28,6 +28,31 @@ exports.getAllFoods = async (req, res) => {
   }
 };
 
+exports.getFoodByCategory = async (req, res) => {
+  try {
+    const { category } = req.params;
+
+    const foods = await Food.find({
+      category: category,
+    }).sort({ createdAt: -1 });
+
+    // const foods = await Food.find({ category });
+
+    if (foods.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No food found for the given category" });
+    }
+
+    res
+      .status(200)
+      .json({ data: foods, message: "Food items retrieved successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 // Controller to get a specific food item by ID
 exports.getFoodById = async (req, res) => {
   try {
@@ -63,7 +88,7 @@ exports.createFood = async (req, res) => {
       name,
       description,
       price,
-      category: existingCategory._id, // Assign the category ID to the food item
+      category, // Assign the category ID to the food item
       image,
     });
     res.status(201).json({ data: newFood, message: "Item Added successfully" });
