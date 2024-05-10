@@ -23,7 +23,7 @@ mongoose
   .catch((err) => console.log(err));
 
 // Middleware for CORS and JSON parsing
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = ["http://localhost:3001"];
 app.use(
   cors({
     origin: function (origin, callback) {
