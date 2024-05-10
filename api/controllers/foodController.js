@@ -33,17 +33,16 @@ exports.getFoodByCategory = async (req, res) => {
     const { category } = req.params;
 
     const foods = await Food.find({
-      category: category,
+      category,
     }).sort({ createdAt: -1 });
 
     // const foods = await Food.find({ category });
 
-    if (foods.length === 0) {
+    if (foods.length === 0 || foods === null) {
       return res
         .status(404)
         .json({ message: "No food found for the given category" });
     }
-
     res
       .status(200)
       .json({ data: foods, message: "Food items retrieved successfully" });
