@@ -4,9 +4,6 @@
 /node_modules
 /.pnp
 .pnp.js
-/controllers/cartControllers.js
-/models/cartSchema.js
-/routes/cartRoutes.js
 
 # testing
 /coverage
