@@ -132,6 +132,11 @@ exports.loginUser = async (req, res) => {
 
     // Generate JWT token
     const token = generateToken(user);
+    res.cookie("accessToken", token, {
+      httpOnly: true,
+      maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days in milliseconds
+      secure: process.env.NODE_ENV === "production", // Set secure flag in production
+    });
 
     res.status(200).json({ data: user, token, message: "Login successful" });
   } catch (error) {

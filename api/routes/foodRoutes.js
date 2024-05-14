@@ -41,6 +41,6 @@ router.put("/:foodId", protect, verifyAdmin, updateFoodById);
 router.delete("/:foodId", protect, verifyAdmin, deleteFoodById);
 
 // route for getting food items by category
-router.get("/category/:category", getFoodByCategory);
+router.get("/category/:categoryName", getFoodByCategory);
 
 module.exports = router;

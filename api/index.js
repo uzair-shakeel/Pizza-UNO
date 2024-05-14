@@ -5,8 +5,9 @@ const path = require("path"); // Import the path module
 const userRoutes = require("./routes/userRoutes");
 const categoryRoutes = require("./routes/categoryRoute");
 const foodRoutes = require("./routes/foodRoutes");
+// const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
-const cartRoutes = require("./routes/cartRoutes");
+const cartRoutes = require("./routes/cart");
 const multer = require("multer");
 const dotenv = require("dotenv");
 
@@ -82,7 +83,7 @@ app.use("/user", userRoutes);
 app.use("/category", categoryRoutes);
 app.use("/food", foodRoutes);
 app.use("/order", orderRoutes);
-// app.use("/cart", cartRoutes);
+app.use("/cart", cartRoutes);
 
 // Start the server
 app.listen(PORT, () => {

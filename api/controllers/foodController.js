@@ -30,8 +30,8 @@ exports.getAllFoods = async (req, res) => {
 
 exports.getFoodByCategory = async (req, res) => {
   try {
-    const { category } = req.params;
-
+    const category = req.params.categoryName;
+    console.log(category);
     const foods = await Food.find({
       category,
     }).sort({ createdAt: -1 });
