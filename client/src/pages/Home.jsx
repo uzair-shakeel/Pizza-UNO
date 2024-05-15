@@ -54,9 +54,10 @@ const Home = () => {
       </section>
       {/* Information */}
       <div
+        className="infoHours"
         style={{
           display: "flex",
-          padding: "0 10%",
+          padding: "8% 10%",
           width: "100%",
           maxWidth: "1300px ",
           margin: "50px auto",

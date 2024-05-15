@@ -15,11 +15,11 @@ exports.createOrder = async (req, res) => {
 
     await emptyCartByUserID(userId);
 
-    // res.status(201).json({
-    //   status: "success",
-    //   message: "Order created successfully",
-    //   data: order,
-    // });
+    res.status(201).json({
+      status: "success",
+      message: "Order created successfully",
+      data: order,
+    });
   } catch (error) {
     res.status(400).json({
       status: "error",

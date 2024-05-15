@@ -91,7 +91,7 @@ app.post("/payment/checkout", async (req, res) => {
           quantity: item.quantity,
         };
       }),
-      success_url: "http://localhost:5173/payment/success",
+      success_url: "http://localhost:5173/payment-success",
       cancel_url: "http://localhost:5173/payment/cancel",
     });
 

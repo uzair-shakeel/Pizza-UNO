@@ -4,18 +4,17 @@ import { BASE_URL } from "../utils/config";
 import "../styles/cart.css";
 import CartItem from "../shared/CartItem";
 
-import mastercard from "../assets/images/mastercard.png";
-import paypal from "../assets/images/AMEX.png";
-import cashondelivery from "../assets/images/visa-classic-new-800x450.png";
-import jazzcash from "../assets/images/discover.png";
 import { toast } from "react-toastify";
 
-const Cart = () => {
+const PaymentSuccessCart = () => {
   useEffect(() => {
     window.scrollTo(0, -1);
   }, []);
 
-  const { id } = useParams();
+  const data = localStorage.getItem("user");
+  const userData = JSON.parse(data);
+  const id = userData._id;
+  console.log(id);
 
   const useInitialFetch = (url) => {
     const [data, setData] = useState([]);
@@ -59,6 +58,8 @@ const Cart = () => {
     loading: cartLoading,
     error: cartError,
   } = useInitialFetch(`${BASE_URL}/cart/${id}`);
+
+  console.log("hii", userCart);
 
   const useFetch2 = (url) => {
     const [data, setData] = useState([]);
@@ -112,7 +113,7 @@ const Cart = () => {
     setLocation(e.target.value);
   };
 
-  const deleverycharges = userCart.length > 0 ? 1.99 : 0;
+  const deleverycharges = 100;
 
   const quantityChanges = () => {
     if (userCartTotal.length !== 0 && !totalLoading && !totalError) {
@@ -152,71 +153,12 @@ const Cart = () => {
     }
   }, [userCart, cartLoading, cartError]);
 
-  const checkout = async (e) => {
-    e.preventDefault();
-
-    const deliveryItem = {
-      id: "delivery", // Unique identifier for delivery charges
-      price: deleverycharges, // Delivery charges amount
-      name: "Delivery Charges", // Name indicating it's for delivery charges
-      quantity: 1, // Assuming delivery charges is a fixed amount per order
-    };
-
-    const shippingAddress = location;
-    const totalAmount = total;
-    const userId = id;
-
-    const requestBody = {
-      items: [
-        ...userCart.map((item) => ({
-          id: item._id,
-          price: item.price,
-          name: item.foodName,
-          quantity: item.quantity,
-        })),
-        deliveryItem,
-      ],
-      userId,
-      address: shippingAddress,
-      totalAmount,
-    };
-
-    try {
-      // Send request to initiate checkout
-      const res = await fetch(`${BASE_URL}/payment/checkout`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        mode: "cors",
-        body: JSON.stringify(requestBody),
-      });
-      // Check if the response is okay
-      if (!res.ok) {
-        throw new Error(`Failed to initiate checkout: ${res.statusText}`);
-      }
-
-      // Parse response data
-      const data = await res.json();
-
-      // Check if the response contains the URL for redirection
-      if (!data.url) {
-        throw new Error("No redirection URL found in the response");
-      }
-
-      console.log(data);
-      window.location = data.url;
-    } catch (error) {
-      console.error("Error during checkout:", error.message);
-      // Display user-friendly error message
-      toast.error("An error occurred during checkout. Please try again later.");
-    }
-  };
-
   const handleOrder = async (e) => {
     e.preventDefault();
-
+    if (!location) {
+      toast.info("The address is required");
+      return false;
+    }
     const userId = id;
     const items = userCart?.map((item) => ({
       product: item.foodId,
@@ -329,24 +271,15 @@ const Cart = () => {
           <h1 className="pt-3 pb-0 mb-0 text-center">Payment</h1>
           <hr />
           <div className="payment-method">
-            <h5>Payment Methods</h5>
-            <div className="d-flex align-items-center justify-content-center">
-              <button className="btn me-1 disabled">
-                <img className="img-fluid" src={cashondelivery} alt="" />
-              </button>
-              <button className="btn me-1 disabled">
-                <img className="img-fluid" src={mastercard} alt="" />
-              </button>
-              <button className="btn me-1 disabled">
-                <img className="img-fluid" src={jazzcash} alt="" />
-              </button>
-              <button className="btn me-1 disabled">
-                <img className="img-fluid" src={paypal} alt="" />
-              </button>
-            </div>
+            <span>
+              <i
+                style={{ fontSize: "4rem", color: "green" }}
+                className="d-flex justify-content-center ri-checkbox-circle-line"
+              ></i>
+            </span>
             <hr />
             <form>
-              {/* <div className="address-field form-group mb-3">
+              <div className="address-field form-group mb-3">
                 <h6>Address:</h6>
                 <textarea
                   className="address-input"
@@ -356,32 +289,32 @@ const Cart = () => {
                   onChange={handleChange}
                   required
                 />
-              </div> */}
+              </div>
               <hr />
               <div className="total">
                 <div className="list-group">
                   <div className="list-group-item d-flex justify-content-between border-0 px-0">
                     <h6>SubTotal</h6>
-                    <span> £{subtotal}</span>
+                    <span> Rs.{subtotal}</span>
                   </div>
                   <div className="list-group-item d-flex justify-content-between border-0 px-0">
                     <h6>Delivery Charges </h6>
-                    <span> £{deleverycharges}</span>
+                    <span> Rs.{deleverycharges}</span>
                   </div>
                   <div className="list-group-item d-flex justify-content-between border-0 px-0">
                     <h6>Total Amount</h6>
-                    <span> £{total}</span>
+                    <span> Rs.{total}</span>
                   </div>
                 </div>
                 <button
-                  onClick={checkout}
+                  onClick={handleOrder}
                   className={`${
                     userCart.length === 0 ? "disabled" : ""
                   }checkout-btn px-4 btn w-100 btn-primary flex-grow-1 mb-2 d-flex align-items-center justify-content-between`}
                 >
-                  <span>£{total}</span>
+                  <span>Rs.{total}</span>
                   <span>
-                    Pay Now<i className="ri-arrow-right-line"></i>
+                    Confirm Order<i className="ri-arrow-right-line"></i>
                   </span>
                 </button>
               </div>
@@ -393,4 +326,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default PaymentSuccessCart;
