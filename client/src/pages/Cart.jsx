@@ -16,6 +16,7 @@ const Cart = () => {
   }, []);
 
   const { id } = useParams();
+  console.log(id);
 
   const useInitialFetch = (url) => {
     const [data, setData] = useState([]);
@@ -60,6 +61,8 @@ const Cart = () => {
     error: cartError,
   } = useInitialFetch(`${BASE_URL}/cart/${id}`);
 
+  console.log(userCart);
+
   const useFetch2 = (url) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
@@ -102,6 +105,7 @@ const Cart = () => {
     error: totalError,
     setData: setUserCart,
   } = useFetch2(`${BASE_URL}/cart/${id}`);
+  console.log(userCartTotal);
 
   const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
@@ -151,9 +155,6 @@ const Cart = () => {
       setTotal(calculatedTotal);
     }
   }, [userCart, cartLoading, cartError]);
-  const dummyQuantity = 3;
-  const dummyPrice = 300;
-  const dummyName = "Yahooo";
 
   const checkout = async (e) => {
     e.preventDefault();
@@ -181,19 +182,19 @@ const Cart = () => {
       console.log(error);
     }
   };
-
   const handleOrder = async (e) => {
     e.preventDefault();
     if (!location) {
+      toast.info("The address is required");
       return false;
     }
     const userId = id;
     const items = userCart?.map((item) => ({
-      foodId: item.foodId,
+      product: item.foodId,
       name: item.foodName,
       qty: item.quantity,
     }));
-    const address = location;
+    const shippingAddress = location;
     const totalAmount = total;
 
     try {
@@ -203,7 +204,7 @@ const Cart = () => {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ userId, items, address, totalAmount }),
+        body: JSON.stringify({ userId, items, shippingAddress, totalAmount }),
       });
 
       if (!response.ok) {
@@ -282,7 +283,6 @@ const Cart = () => {
               </tbody>
             </table>
           </div>
-          <button onClick={checkout}>Payment?</button>
         </div>
 
         <div

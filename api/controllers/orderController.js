@@ -2,14 +2,17 @@ const Order = require("../models/orderSchema");
 const { emptyCartByUserID } = require("../controllers/cartControllers");
 
 exports.createOrder = async (req, res) => {
-  const user = req.body.userId;
-  const { products, totalAmount, shippingAddress } = req.body;
-  console.log(req.body);
+  const { userId, items, totalAmount, shippingAddress } = req.body;
   try {
-    const order = new Order({ user, products, totalAmount, shippingAddress });
+    const order = new Order({
+      user: userId,
+      products: items,
+      totalAmount,
+      shippingAddress,
+    });
     await order.save();
 
-    await emptyCartByUserID(user);
+    await emptyCartByUserID(userId);
 
     res.status(201).json({
       status: "success",

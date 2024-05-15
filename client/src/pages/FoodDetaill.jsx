@@ -71,7 +71,7 @@ const FoodDetaill = () => {
     data: userinfo,
     loading: userLoading,
     error: userError,
-  } = useFetch2(user ? `${BASE_URL}/users/getUser` : null);
+  } = useFetch2(user ? `${BASE_URL}/user/getUser/${user._id}` : null);
   console.log(userinfo);
 
   const handleQuantityChange = (action) => {

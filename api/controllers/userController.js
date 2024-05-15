@@ -149,7 +149,7 @@ exports.loginUser = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     // Get the user ID from the decoded token attached by the auth middleware
-    const userId = req.body.userId;
+    const userId = req.params.userId;
 
     // Find the user by ID
     const user = await User.findById(userId);

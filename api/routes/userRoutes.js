@@ -8,7 +8,7 @@ router.post("/register", userController.registerUser);
 
 // Login user
 router.post("/login", userController.loginUser);
-router.get("/getUser", protect, userController.getUser);
+router.get("/getUser/:userId", protect, userController.getUser);
 router.get("/getAllUsers", userController.getAllUsers);
 router.put("/update", protect, userController.updateUser);
 

@@ -26,7 +26,7 @@ export const FoodCard = ({ item }) => {
           category: category,
         };
 
-        const response = await fetch(`${BASE_URL}/cart/add`, {
+        const response = await fetch(`${BASE_URL}/cart/addtocart`, {
           method: "post",
           headers: {
             "content-type": "application/json",

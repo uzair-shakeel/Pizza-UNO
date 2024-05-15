@@ -156,8 +156,8 @@ exports.updateQuantity = async (req, res) => {
 // Delete all Carts by user ID
 exports.deleteCart = async (req, res) => {
   try {
-    const _id = req.params.id;
-    const deletedCarts = await Cart.findOneAndDelete(_id);
+    const id = req.params.id;
+    const deletedCarts = await Cart.findOneAndDelete(id);
 
     if (deletedCarts.deletedCount === 0) {
       return res.status(404).json({

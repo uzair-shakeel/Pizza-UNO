@@ -11,11 +11,13 @@ const cartRoutes = require("./routes/cart");
 const multer = require("multer");
 const dotenv = require("dotenv");
 const stripe = require("stripe")(process.env.SECRET_STRIPE_KEY);
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cookieParser());
 // Connect to MongoDB with updated options
 mongoose
   .connect(

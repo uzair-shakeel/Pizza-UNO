@@ -161,7 +161,7 @@ const emptyCartByUserID = async (userId) => {
   try {
     // Logic to empty the cart of the user with the provided userId
     // Assuming you have a Cart model/schema
-    const cart = await Cart.findOne({ user: userId });
+    const cart = await Cart.deleteMany({ userId });
     if (cart) {
       cart.items = []; // Empty the items array
       cart.totalQuantity = 0; // Reset totalQuantity

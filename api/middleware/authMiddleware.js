@@ -2,8 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const protect = (req, res, next) => {
   try {
-    const token =
-      req?.cookies?.accessToken || req?.headers?.authorization?.split(" ")[1]; // Optional chaining operator for safer access
+    const token = req?.cookies?.accessToken; // Optional chaining operator for safer access
 
     if (!token) {
       return res.status(401).json({
