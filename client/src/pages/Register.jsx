@@ -14,10 +14,16 @@ const Register = () => {
   }, []);
 
   const [credentials, setCredentials] = useState({
-    username: undefined,
+    firstName: "",
+    lastName: "",
+    email: "",
     phone: "",
-    email: undefined,
-    password: undefined,
+    telephone: "",
+    postcode: "",
+    address1: "",
+    address2: "",
+    city: "",
+    password: "",
   });
 
   const { dispatch } = useContext(AuthContext);
@@ -47,7 +53,7 @@ const Register = () => {
       navigate("/login");
     } catch (error) {
       console.log(error.message);
-      toast.error("Registeration Failed");
+      toast.error("Registration Failed");
     }
   };
 
@@ -73,7 +79,7 @@ const Register = () => {
                       <input
                         type="text"
                         placeholder="First Name"
-                        id="firstname"
+                        id="firstName"
                         onChange={handleChange}
                         required
                       />
@@ -82,7 +88,7 @@ const Register = () => {
                       <input
                         type="text"
                         placeholder="Last Name"
-                        id="lastname"
+                        id="lastName"
                         onChange={handleChange}
                         required
                       />
@@ -98,74 +104,70 @@ const Register = () => {
                       required
                     />
                   </div>
-                  <div style={{ display: "flex", gap: "15px" }}>
-                    <div className="form-group mb-3">
-                      <input
-                        type="number"
-                        placeholder="Phone"
-                        id="phone"
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
 
-                    <div className="form-group mb-3">
-                      <input
-                        type="number"
-                        placeholder="Telephone"
-                        id="telephone"
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
+                  <div className="form-group mb-3">
+                    <input
+                      type="number"
+                      placeholder="Phone"
+                      id="phone"
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
-                  <div style={{ display: "flex", gap: "15px" }}>
-                    <div className="form-group mb-3">
-                      <input
-                        type="password"
-                        placeholder="Password"
-                        id="password"
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group mb-3">
-                      <input
-                        type="password"
-                        placeholder="Confirm Password"
-                        id="passwordConfirm"
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
+
+                  <div className="form-group mb-3">
+                    <input
+                      type="number"
+                      placeholder="Telephone"
+                      id="telephone"
+                      onChange={handleChange}
+                    />
                   </div>
-                  <div style={{ display: "flex", gap: "15px" }}>
-                    <div className="form-group mb-3">
-                      <input
-                        type="number"
-                        placeholder="Postcode"
-                        id="postcode"
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group mb-3">
-                      <input
-                        type="text"
-                        placeholder="City"
-                        id="city"
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
+
+                  <div className="form-group mb-3">
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      id="password"
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
+
+                  <div className="form-group mb-3">
+                    <input
+                      type="password"
+                      placeholder="Confirm Password"
+                      id="passwordConfirm"
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group mb-3">
+                    <input
+                      type="number"
+                      placeholder="Postcode"
+                      id="postcode"
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="form-group mb-3">
+                    <input
+                      type="text"
+                      placeholder="City"
+                      id="city"
+                      onChange={handleChange}
+                    />
+                  </div>
+
                   <div className="form-group mb-3">
                     <input
                       type="address"
                       placeholder="Address"
                       id="address1"
                       onChange={handleChange}
-                      required
                     />
                   </div>
 
@@ -174,7 +176,7 @@ const Register = () => {
                   </button>
                 </form>
                 <p>
-                  Already have an account? <Link to="/Login">Login</Link>
+                  Already have an account? <Link to="/login">Login</Link>
                 </p>
               </div>
               <div className="login-img d-flex justify-content-center">
