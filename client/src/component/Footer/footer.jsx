@@ -91,12 +91,6 @@ const Footer = () => {
                               </Link>
                             </p>
                             <p>
-                              <Link to="/menu" className="text-reset">
-                                <i className="ri-arrow-right-s-line"></i> Terms
-                                & Conditions
-                              </Link>
-                            </p>
-                            <p>
                               <Link to="/privacy-policy" className="text-reset">
                                 <i className="ri-arrow-right-s-line"></i>{" "}
                                 Privacy Policy
