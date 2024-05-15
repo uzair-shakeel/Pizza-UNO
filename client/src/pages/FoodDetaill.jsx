@@ -249,14 +249,14 @@ const FoodDetaill = () => {
                 <p className="d-flex justify-content-between align-items-center">
                   Price:{" "}
                   <span>
-                    {quantity} <i className="ri-close-line"></i> ${price}
+                    {quantity} <i className="ri-close-line"></i> £{price}
                   </span>
                 </p>
                 <p className="d-flex justify-content-between align-items-center">
-                  Delevery Charges: <span>${deleveryCharges}</span>
+                  Delivery Charges: <span>£{deleveryCharges}</span>
                 </p>
                 <h5 className="d-flex justify-content-between align-items-center">
-                  Total Amount: <span>${TotalAmount}</span>
+                  Total Amount: <span>£{TotalAmount}</span>
                 </h5>
               </div>
               <div className="d-flex justify-content-between mt-4 gap-3">

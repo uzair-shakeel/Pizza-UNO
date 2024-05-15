@@ -10,8 +10,9 @@ const orderRoutes = require("./routes/orderRoutes");
 const cartRoutes = require("./routes/cart");
 const multer = require("multer");
 const dotenv = require("dotenv");
-const stripe = require("stripe")(process.env.SECRET_STRIPE_KEY);
+const stripe = require("stripe");
 const cookieParser = require("cookie-parser");
+const { default: Stripe } = require("stripe");
 
 dotenv.config();
 const app = express();
@@ -70,13 +71,15 @@ const upload = multer({
 
 app.post("/payment/checkout", async (req, res) => {
   try {
+    const stripe = new Stripe(process.env.SECRET_STRIPE_KEY);
+
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["Card"],
+      payment_method_types: ["card"],
       mode: "payment",
       line_items: req.body.items.map((item) => {
         return {
           price_data: {
-            currency: "inr",
+            currency: "GBP",
             product_data: {
               name: item.name,
             },
@@ -85,10 +88,10 @@ app.post("/payment/checkout", async (req, res) => {
           quantity: item.quantity,
         };
       }),
-      success_url: "http://localhost:5173/payment/success",
+      success_url: "http://localhost:5173/thank-you",
       cancel_url: "http://localhost:5173/payment/cancel",
     });
-
+    console.log(session);
     res.json({ url: session.url });
   } catch (error) {
     res.status(500).json({ error: error.message });

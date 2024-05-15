@@ -5,9 +5,9 @@ import "../styles/cart.css";
 import CartItem from "../shared/CartItem";
 
 import mastercard from "../assets/images/mastercard.png";
-import paypal from "../assets/images/paypal.png";
-import cashondelivery from "../assets/images/cashondelivery.png";
-import jazzcash from "../assets/images/jazzcash.png";
+import paypal from "../assets/images/AMEX.png";
+import cashondelivery from "../assets/images/visa-classic-new-800x450.png";
+import jazzcash from "../assets/images/discover.png";
 import { toast } from "react-toastify";
 
 const Cart = () => {
@@ -16,7 +16,6 @@ const Cart = () => {
   }, []);
 
   const { id } = useParams();
-  console.log(id);
 
   const useInitialFetch = (url) => {
     const [data, setData] = useState([]);
@@ -61,8 +60,6 @@ const Cart = () => {
     error: cartError,
   } = useInitialFetch(`${BASE_URL}/cart/${id}`);
 
-  console.log(userCart);
-
   const useFetch2 = (url) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
@@ -105,7 +102,6 @@ const Cart = () => {
     error: totalError,
     setData: setUserCart,
   } = useFetch2(`${BASE_URL}/cart/${id}`);
-  console.log(userCartTotal);
 
   const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
@@ -116,7 +112,7 @@ const Cart = () => {
     setLocation(e.target.value);
   };
 
-  const deleverycharges = 100;
+  const deleverycharges = userCart.length > 0 ? 1.99 : 0;
 
   const quantityChanges = () => {
     if (userCartTotal.length !== 0 && !totalLoading && !totalError) {
@@ -158,36 +154,73 @@ const Cart = () => {
 
   const checkout = async (e) => {
     e.preventDefault();
-    try {
-      const res = await fetch(`${BASE_URL}/payment/checkout`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-        body: JSON.stringify({
-          items: [
-            {
-              id: 1,
-              quantity: dummyQuantity,
-              price: dummyPrice,
-              name: dummyName,
-            },
-          ],
-        }),
-      });
-      const data = await res.json();
-      window.location = data.url;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleOrder = async (e) => {
-    e.preventDefault();
+
+    const deliveryItem = {
+      id: "delivery", // Unique identifier for delivery charges
+      price: deleverycharges, // Delivery charges amount
+      name: "Delivery Charges", // Name indicating it's for delivery charges
+      quantity: 1, // Assuming delivery charges is a fixed amount per order
+    };
+
+    const requestBody = {
+      items: [
+        ...userCart.map((item) => ({
+          id: item._id,
+          price: item.price,
+          name: item.foodName,
+          quantity: item.quantity,
+        })),
+        deliveryItem,
+      ],
+    };
+
     if (!location) {
       toast.info("The address is required");
       return false;
+    } else {
+      try {
+        // Send request to initiate checkout
+        const res = await fetch(`${BASE_URL}/payment/checkout`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          mode: "cors",
+          body: JSON.stringify(requestBody),
+        });
+        // Check if the response is okay
+        if (!res.ok) {
+          throw new Error(`Failed to initiate checkout: ${res.statusText}`);
+        }
+
+        // Parse response data
+        const data = await res.json();
+
+        // Check if the response contains the URL for redirection
+        if (!data.url) {
+          throw new Error("No redirection URL found in the response");
+        }
+
+        if (data.url === "http://localhost:5173/thank-you") {
+          alert("Hiii");
+        }
+
+        console.log(data);
+        window.location = data.url;
+      } catch (error) {
+        console.error("Error during checkout:", error.message);
+        // Display user-friendly error message
+        toast.error(
+          "An error occurred during checkout. Please try again later."
+        );
+      }
     }
+  };
+
+  const handleOrder = async (e) => {
+    e.preventDefault();
+
     const userId = id;
     const items = userCart?.map((item) => ({
       product: item.foodId,
@@ -300,9 +333,9 @@ const Cart = () => {
           <h1 className="pt-3 pb-0 mb-0 text-center">Payment</h1>
           <hr />
           <div className="payment-method">
-            <h5>Payment Method:</h5>
+            <h5>Payment Methods</h5>
             <div className="d-flex align-items-center justify-content-center">
-              <button className="btn me-1 active">
+              <button className="btn me-1 disabled">
                 <img className="img-fluid" src={cashondelivery} alt="" />
               </button>
               <button className="btn me-1 disabled">
@@ -333,24 +366,24 @@ const Cart = () => {
                 <div className="list-group">
                   <div className="list-group-item d-flex justify-content-between border-0 px-0">
                     <h6>SubTotal</h6>
-                    <span> Rs.{subtotal}</span>
+                    <span> £{subtotal}</span>
                   </div>
                   <div className="list-group-item d-flex justify-content-between border-0 px-0">
                     <h6>Delivery Charges </h6>
-                    <span> Rs.{deleverycharges}</span>
+                    <span> £{deleverycharges}</span>
                   </div>
                   <div className="list-group-item d-flex justify-content-between border-0 px-0">
                     <h6>Total Amount</h6>
-                    <span> Rs.{total}</span>
+                    <span> £{total}</span>
                   </div>
                 </div>
                 <button
-                  onClick={handleOrder}
+                  onClick={checkout}
                   className={`${
                     userCart.length === 0 ? "disabled" : ""
                   }checkout-btn px-4 btn w-100 btn-primary flex-grow-1 mb-2 d-flex align-items-center justify-content-between`}
                 >
-                  <span>Rs.{total}</span>
+                  <span>£{total}</span>
                   <span>
                     Confirm Order<i className="ri-arrow-right-line"></i>
                   </span>

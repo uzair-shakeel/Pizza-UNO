@@ -97,7 +97,7 @@ export const FoodCard = ({ item }) => {
         <p className="card-text">{description}</p>
         <div className="card-bottom my-auto d-flex align-items-center justify-content-between mt-3">
           <h5 className="my-auto">
-            ${price} <span></span>
+            £{price} <span></span>
           </h5>
           <Link className="btn order-btn" to={`/fooddetail/${_id}`}>
             Order

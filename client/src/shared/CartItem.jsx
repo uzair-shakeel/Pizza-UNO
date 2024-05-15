@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 const CartItem = ({ cart, quantityChanges }) => {
   const { _id, userId, foodId, photo, foodName, price, quantity } = cart;
   const [newQuantity, setNewQuantity] = useState(quantity);
-  const deleveryCharges = 100;
+  const deleveryCharges = 1.99;
 
   const handleQuantityChange = async (action) => {
     try {
@@ -120,7 +120,7 @@ const CartItem = ({ cart, quantityChanges }) => {
         />
         {foodName}
       </td>
-      <td>$ {price}</td>
+      <td>£{price}</td>
       <td>
         <div className="quantity d-flex align-items-center justify-content-between">
           <div className="input-group w-auto justify-content-end align-items-center justify-content-center">
@@ -148,7 +148,7 @@ const CartItem = ({ cart, quantityChanges }) => {
           </div>
         </div>
       </td>
-      <td>{price * newQuantity + deleveryCharges}</td>
+      <td>£{price * newQuantity + deleveryCharges}</td>
 
       <td className="text-center">
         <button
