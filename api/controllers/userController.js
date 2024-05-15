@@ -170,9 +170,7 @@ exports.getUser = async (req, res) => {
 // Update user details
 exports.updateUser = async (req, res) => {
   try {
-    const { name, email, gender, address, salutationPreference, profileImage } =
-      req.body;
-    const userId = req.body.userId; // Assuming userId is provided in the request body or can be obtained from the JWT token
+    const userId = req.params.id; // Assuming userId is obtained from the JWT token
 
     // Find the user by ID
     let user = await User.findById(userId);
@@ -182,20 +180,45 @@ exports.updateUser = async (req, res) => {
     }
 
     // Update user data
-    user.name = name || user.name;
-    // Check if the provided email is different from the current email
-    if (email && email !== user.email) {
-      user.email = email;
-    }
-    user.gender = gender || user.gender;
-    user.address = address || user.address;
-    user.salutationPreference =
-      salutationPreference || user.salutationPreference;
-    user.profileImage = profileImage || user.profileImage;
+    user.firstName = req.body.firstName || user.firstName;
+    user.lastName = req.body.lastName || user.lastName;
+    user.email = req.body.email || user.email;
+    user.phone = req.body.phone || user.phone;
+    user.telephone = req.body.telephone || user.telephone;
+    user.postcode = req.body.postcode || user.postcode;
+    user.address1 = req.body.address1 || user.address1;
+    user.address2 = req.body.address2 || user.address2;
+    user.city = req.body.city || user.city;
+    user.profileImage = req.body.profileImage || user.profileImage;
+
+    user.role = req.body.role || user.role;
 
     // Save the updated user data
     user = await user.save();
+    // Send the updated user details as a response
+    res
+      .status(200)
+      .json({ data: user, message: "User details updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 
+exports.updateRoleToUser = async (req, res) => {
+  try {
+    const userId = req.params.id; // Assuming userId is obtained from the JWT token
+
+    // Find the user by ID
+    let user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.role = "user";
+    // Save the updated user data
+    user = await user.save();
     // Send the updated user details as a response
     res
       .status(200)
@@ -231,5 +254,24 @@ exports.getAllUsers = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+//delete
+exports.deleteUser = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    await User.findByIdAndDelete(id);
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully deleted",
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete",
+    });
   }
 };

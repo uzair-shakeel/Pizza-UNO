@@ -1,10 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const Order = require("./models/orderSchema");
 const cors = require("cors");
 const path = require("path"); // Import the path module
 const userRoutes = require("./routes/userRoutes");
 const categoryRoutes = require("./routes/categoryRoute");
 const foodRoutes = require("./routes/foodRoutes");
+const { createOrder } = require("./controllers/orderController");
 // const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const cartRoutes = require("./routes/cart");
@@ -72,11 +74,12 @@ const upload = multer({
 app.post("/payment/checkout", async (req, res) => {
   try {
     const stripe = new Stripe(process.env.SECRET_STRIPE_KEY);
+    const { address, totalAmount, userId, items } = req.body;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
-      line_items: req.body.items.map((item) => {
+      line_items: items.map((item) => {
         return {
           price_data: {
             currency: "GBP",
@@ -88,11 +91,23 @@ app.post("/payment/checkout", async (req, res) => {
           quantity: item.quantity,
         };
       }),
-      success_url: "http://localhost:5173/thank-you",
+      success_url: "http://localhost:5173/payment/success",
       cancel_url: "http://localhost:5173/payment/cancel",
     });
+
+    // const order = new Order({
+    //   user: userId,
+    //   products: items,
+    //   totalAmount,
+    //   shippingAddress: address,
+    // });
+
+    // await order.save();
+
+    // await emptyCartByUserID(userId);
     console.log(session);
     res.json({ url: session.url });
+    console.log(session);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
