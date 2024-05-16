@@ -30,7 +30,7 @@ function App() {
             );
           }
 
-          const result = await res.json();
+          const result = await res.json()
           setData(result.data);
         } catch (err) {
           setError(err.message);
@@ -57,8 +57,7 @@ return (
   <div>
     {loading ? (
       <Spinner />
-    ) : error ? (
-      <div>Error: {error}</div>
+  
     ) : userData && userData.role === "admin" ? (
       <AdminLayout />
     ) : (

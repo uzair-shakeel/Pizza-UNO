@@ -17,7 +17,6 @@ const dotenv = require("dotenv");
 const stripe = require("stripe");
 const cookieParser = require("cookie-parser");
 const { default: Stripe } = require("stripe");
-const bodayParser = require("body-parser");
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;

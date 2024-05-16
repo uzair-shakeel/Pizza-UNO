@@ -28,7 +28,6 @@ const Login = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
-
     try {
       const res = await fetch(`${BASE_URL}/user/login`, {
         method: "post",
@@ -40,10 +39,11 @@ const Login = () => {
       });
 
       const result = await res.json();
-      if (!res.ok) {
+
+      console.log(result);
+      if (!result.token) {
         return toast.error(result.message);
       }
-      console.log(result);
       localStorage.setItem("role", result.data.role);
       dispatch({
         type: "LOGIN_SUCCESS",

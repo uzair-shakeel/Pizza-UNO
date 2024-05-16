@@ -8,10 +8,10 @@ router.post("/register", userController.registerUser);
 
 // Login user
 router.post("/login", userController.loginUser);
-router.get("/getUser/:userId", protect, userController.getUser);
+router.get("/getUser/:userId", userController.getUser);
 router.get("/getAllUsers", userController.getAllUsers);
-router.put("/update/:id", protect, userController.updateUser);
-router.put("/updateRoleToUser/:id", protect, userController.updateRoleToUser);
-router.delete("/delete/:id", protect, userController.deleteUser);
+router.put("/update/:id", userController.updateUser);
+router.put("/updateRoleToUser/:id", userController.updateRoleToUser);
+router.delete("/delete/:id", userController.deleteUser);
 
 module.exports = router;

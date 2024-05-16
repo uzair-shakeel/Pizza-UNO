@@ -89,12 +89,12 @@ const Header = () => {
   };
 
   const { user, dispatch } = useContext(AuthContext);
-
+  console.log(user);
   const {
     data: userinfo,
     loading,
     error,
-  } = useFetch(user ? `${BASE_URL}/user/getUser/${user._id}` : null);
+  } = useFetch(user ? `${BASE_URL}/user/getUser/${user?._id}` : null);
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
@@ -102,6 +102,7 @@ const Header = () => {
     navigate("/");
   };
 
+  console.log(error);
   return (
     <>
       <div className="d-block navbar-behind"></div>
@@ -167,7 +168,7 @@ const Header = () => {
                 </li>
               </ul>
 
-              {user && !loading && !error && userinfo ? (
+              {user && userinfo && !loading ? (
                 <>
                   <div className="cart d-flex align-items-center justify-content-center">
                     <NavLink
@@ -195,7 +196,7 @@ const Header = () => {
                       <li>
                         <NavLink
                           className="dropdown-item"
-                          to={`/my-orders/${userinfo._id}`}
+                          to={`/my-orders/${userinfo?._id}`}
                         >
                           My Orders
                         </NavLink>
@@ -233,7 +234,6 @@ const Header = () => {
                   </Link>
                 </div>
               )}
-
             </div>
           </div>
         </div>
