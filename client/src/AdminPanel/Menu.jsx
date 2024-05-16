@@ -73,7 +73,7 @@ export const AllMenuData = ({ item }) => {
   const { _id, title, category, image, price, reviews } = item;
 
   const handleDelete = (foodId) => {
-    deleteData(`${BASE_URL}/food/foods/${foodId}`);
+    deleteData(`${BASE_URL}/food/${foodId}`);
   };
 
   const { totalRating, avgRating } = calculateAvgRating(reviews);
@@ -104,7 +104,7 @@ export const AllMenuData = ({ item }) => {
           <span>({reviews.length})</span>
         )}
       </td>
-      <td>Rs.{price}</td>
+      <td>€{price}</td>
       <td className="text-center">
         <Link className="btn btn-light action-btn" to={`/updatefood/${_id}`}>
           <i className="ri-edit-box-line action-icon edit-icon"></i>

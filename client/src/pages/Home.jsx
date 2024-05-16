@@ -28,11 +28,7 @@ const Home = () => {
                 <br />
                 <span>Collections</span>
               </h1>
-              <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                Maecenas porttitor congue massa. Fusce posuere, magna sed
-                pulvinar ultricies.
-              </p>
+              <p>“TASTE THE FINEST FOOD IN SUNDERLAND”</p>
               <Link to="/menu" className="menu-btn btn btn-primary">
                 Menu
               </Link>

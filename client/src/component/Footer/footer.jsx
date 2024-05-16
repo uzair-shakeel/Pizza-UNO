@@ -1,12 +1,35 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./footer.css";
 import { AuthContext } from "../../context/AuthContext";
 import logo from "../../assets/images/logo.png";
+import { toast } from "react-toastify";
 
 const Footer = () => {
   const year = new Date().getFullYear();
   const { user } = useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+  const handleSubscribe = () => {
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    toast.success("Newsletter Subscribed Successfully");
+    setEmail("");
+  };
+
+  const handleChange = (e) => {
+    setEmail(e.target.value);
+    setEmailError("");
+  };
+
+  const validateEmail = (email) => {
+    // Regular expression for email validation
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
 
   return (
     <>
@@ -22,31 +45,16 @@ const Footer = () => {
           </div>
           <div className="col-lg-5 col-md-8 col-12 pb-2 pb-lg-0 ">
             <div className="newsletter-input my-auto ">
-              <input type="email" placeholder="Your Email" />
-              <button className="btn newsletter-btn">Subscribe</button>
+              <input
+                type="email"
+                placeholder="Your Email"
+                value={email}
+                onChange={handleChange}
+              />
+              <button className="btn newsletter-btn" onClick={handleSubscribe}>
+                Subscribe
+              </button>
             </div>
-          </div>
-          <div className="col-lg-3 col-12 social-links d-flex align-items-center justify-content-center gap-1">
-            <span>
-              <Link to="#">
-                <i className="ri-youtube-fill"></i>
-              </Link>
-            </span>
-            <span>
-              <Link to="#">
-                <i className="ri-github-fill"></i>
-              </Link>
-            </span>
-            <span>
-              <Link to="#">
-                <i className="ri-facebook-fill"></i>
-              </Link>
-            </span>
-            <span>
-              <Link to="#">
-                <i className="ri-instagram-line"></i>
-              </Link>
-            </span>
           </div>
         </div>
       </div>
@@ -61,9 +69,7 @@ const Footer = () => {
                       <div className="col-md-4 col-lg-3 foot-texts footer-logo mx-auto mb-4 mt-2">
                         <img className="img-fluid " src={logo} alt="" />
                         <p style={{ fontSize: "15px" }}>
-                          lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Commodi, enim. Amet consectetur adipisicing
-                          elit.
+                          TASTE THE FINEST FOOD IN SUNDERLAND.
                         </p>
                       </div>
                       <div style={{ color: "white" }}>
@@ -131,8 +137,7 @@ const Footer = () => {
                 <div className="col-12 d-flex justify-content-center">
                   <p className="copyright foot-texts">
                     {" "}
-                    Pizza Uno Sunderland © {year}. All rights reserved. Designed
-                    By Takeaway Apps, EPOS - eTakeaway Max
+                    Pizza Uno Sunderland © {year}. All rights reserved.
                   </p>
                 </div>
               </footer>

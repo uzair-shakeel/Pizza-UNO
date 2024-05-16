@@ -30,19 +30,6 @@ mongoose
   .catch((err) => console.log(err));
 const allowedOrigins = ["http://localhost:5173", "*"];
 
-// app.use(
-//   cors({
-//     origin: function (origin, callback) {
-//       // Check if the origin is allowed
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//   })
-// );
-
 app.use(
   cors({
     origin: "http://localhost:5173", // Replace with the actual origin of your frontend
@@ -95,16 +82,6 @@ app.post("/payment/checkout", async (req, res) => {
       cancel_url: "http://localhost:5173/payment/cancel",
     });
 
-    // const order = new Order({
-    //   user: userId,
-    //   products: items,
-    //   totalAmount,
-    //   shippingAddress: address,
-    // });
-
-    // await order.save();
-
-    // await emptyCartByUserID(userId);
     console.log(session);
     res.json({ url: session.url });
     console.log(session);

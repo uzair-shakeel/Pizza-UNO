@@ -100,15 +100,31 @@ const CreateFood = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="d-flex flex-grow-1 ">
-                    <span className="input-group-text">Category:</span>
-                    <input
-                      type="text"
+                  <div className="d-flex flex-grow-1">
+                    <label htmlFor="category" className="input-group-text">
+                      Category:
+                    </label>
+                    <select
                       name="category"
+                      id="category"
                       className="form-control"
-                      placeholder="Category of the food"
                       onChange={handleChange}
-                    />
+                    >
+                      <option value="">Select a category</option>
+                      <option value="Burgers">Burgers</option>
+                      <option value="Pizzas">Pizzas</option>
+                      <option value="Garlic Bread">Garlic Bread</option>
+                      <option value="Kebabs">Kebabs</option>
+                      <option value="Wraps">Wraps</option>
+                      <option value="Pastas">Pastas</option>
+                      <option value="Chicken">Chicken</option>
+                      <option value="Seafood Dishes">Seafood Dishes</option>
+                      <option value="Extras">Extras</option>
+                      <option value="Salads">Salads</option>
+                      <option value="Desserts">Desserts</option>
+                      <option value="Drinks">Drinks</option>
+                      <option value="Meal Deals">Meal Deals</option>
+                    </select>
                   </div>
                 </div>
                 <div className="input-fields input-group mb-3">

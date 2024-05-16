@@ -95,7 +95,7 @@ export const FoodCard = ({ item }) => {
           </span>
         </div>
         <p className="card-text">{description}</p>
-        <div className="card-bottom my-auto d-flex align-items-center justify-content-between mt-3">
+        <div className="card-bottom  d-flex align-items-center justify-content-between mt-3">
           <h5 className="my-auto">
             £{price} <span></span>
           </h5>
