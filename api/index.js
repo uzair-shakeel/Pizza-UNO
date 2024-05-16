@@ -17,7 +17,7 @@ const dotenv = require("dotenv");
 const stripe = require("stripe");
 const cookieParser = require("cookie-parser");
 const { default: Stripe } = require("stripe");
-const bodayParser = require("body-parser")
+const bodayParser = require("body-parser");
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -35,20 +35,20 @@ mongoose
 // Middleware for CORS and JSON parsing
 
 const corsOptions = {
-  origin: (origin, callback)=>{
+  origin: (origin, callback) => {
     const allowedOrigins = [
       "https://pizza-uno-frontend-git-main-uzairs-projects-328814ec.vercel.app",
       "https://pizza-uno-frontend.vercel.app",
       "http://localhost:5173",
     ];
     const isAllowed = allowedOrigins.includes(origin);
-    callback(null, isAllowed? origin : false)
+    callback(null, isAllowed ? origin : false);
   },
   medthod: "GET, POST, PUT, DELETE, PATCH, HEAD",
-  credentials: true
+  credentials: true,
 };
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 
 // Error handling for CORS middleware
 app.use((err, req, res, next) => {
@@ -120,10 +120,6 @@ app.post("/payment/checkout", async (req, res) => {
   try {
     const stripe = new Stripe(process.env.SECRET_STRIPE_KEY);
     const { items } = req.body;
-
-    if (!validateCreditCard(cardNumber)) {
-      return res.status(400).json({ error: "Invalid credit card number" });
-    }
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
