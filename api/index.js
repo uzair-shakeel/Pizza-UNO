@@ -140,6 +140,7 @@ app.post("/payment/checkout", async (req, res) => {
       cancel_url: "http://localhost:5173/payment/cancel",
     });
 
+    console.log(session);
     res.json({ url: session.url });
   } catch (error) {
     res.status(500).json({ error: error.message });
