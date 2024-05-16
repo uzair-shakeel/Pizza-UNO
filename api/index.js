@@ -17,11 +17,12 @@ const dotenv = require("dotenv");
 const stripe = require("stripe");
 const cookieParser = require("cookie-parser");
 const { default: Stripe } = require("stripe");
-
+const bodayParser = require("body-parser")
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(bodayParser.json());
 app.use(cookieParser());
 // Connect to MongoDB with updated options
 mongoose
@@ -32,23 +33,22 @@ mongoose
   .catch((err) => console.log(err));
 
 // Middleware for CORS and JSON parsing
-const allowedOrigins = [
-  "https://pizza-uno-frontend-git-main-uzairs-projects-328814ec.vercel.app",
-  "https://pizza-uno-frontend.vercel.app",
-  "http://localhost:5173",
-];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  })
-);
+const corsOptions = {
+  origin: (origin, callback)=>{
+    const allowedOrigins = [
+      "https://pizza-uno-frontend-git-main-uzairs-projects-328814ec.vercel.app",
+      "https://pizza-uno-frontend.vercel.app",
+      "http://localhost:5173",
+    ];
+    const isAllowed = allowedOrigins.includes(origin);
+    callback(null, isAllowed? origin : false)
+  },
+  medthod: "GET, POST, PUT, DELETE, PATCH, HEAD",
+  credentials: true
+};
+
+app.use(cors(corsOptions))
 
 // Error handling for CORS middleware
 app.use((err, req, res, next) => {
