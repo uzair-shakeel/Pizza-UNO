@@ -60,7 +60,7 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.use(express.json({ limit: "3mb" }));
+app.use(express.json());
 
 // Set storage engine for multer
 const storage = multer.diskStorage({
