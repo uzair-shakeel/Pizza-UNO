@@ -37,6 +37,7 @@ const allowedOrigins = [
   "https://pizza-uno-frontend.vercel.app",
   "http://localhost:5173",
 ];
+
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -48,6 +49,16 @@ app.use(
     },
   })
 );
+
+// Error handling for CORS middleware
+app.use((err, req, res, next) => {
+  if (err) {
+    console.error("CORS Error:", err.message);
+    res.status(403).json({ error: "CORS Error: " + err.message });
+  } else {
+    next();
+  }
+});
 
 app.use(express.json({ limit: "3mb" }));
 
