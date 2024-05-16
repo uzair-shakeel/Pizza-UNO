@@ -26,9 +26,7 @@ app.use(bodayParser.json());
 app.use(cookieParser());
 // Connect to MongoDB with updated options
 mongoose
-  .connect(
-    "mongodb+srv://uzair:uzair123@api.cpammnv.mongodb.net/Pizza_UNO?retryWrites=true&w=majority&appName=API"
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => console.log("DB Connected"))
   .catch((err) => console.log(err));
 
