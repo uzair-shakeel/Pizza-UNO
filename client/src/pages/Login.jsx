@@ -43,12 +43,14 @@ const Login = () => {
       if (!res.ok) {
         return toast.error(result.message);
       }
+      console.log(result.data.role);
+      localStorage.setItem("role", result.data.role);
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: {
           user: {
             ...result.data,
-            role: result.role,
+            role: result.data.role,
           },
         },
       });
