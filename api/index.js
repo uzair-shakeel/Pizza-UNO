@@ -30,16 +30,22 @@ mongoose
   )
   .then(() => console.log("DB Connected"))
   .catch((err) => console.log(err));
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://pizzauno-api.vercel.app/",
-  "*",
-];
 
+// Middleware for CORS and JSON parsing
+const allowedOrigins = [
+  "https://pizza-uno-frontend-git-main-uzairs-projects-328814ec.vercel.app",
+  "https://pizza-uno-frontend.vercel.app",
+  "http://localhost:5173",
+];
 app.use(
   cors({
-    origin: allowedOrigins, // Replace with the actual origin of your frontend
-    credentials: true, // Allow credentials
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
 
