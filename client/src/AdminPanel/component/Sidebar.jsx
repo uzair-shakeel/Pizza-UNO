@@ -94,7 +94,15 @@ const Sidebar = () => {
         className={`d-flex sidebar-wrapper flex-column text-bg-dark align-items-between h-100 sidebar wrapper ${
           isCollapsed ? "collapsed-sidebar p-1" : "p-3"
         }`}
+        style={{ zIndex: 10 }}
       >
+        <button
+          className="btn text-white collapse-btn align-item-center justify-content-center ms-1 my-auto"
+          onClick={handleToggleCollapse}
+          style={{ maxWidth: "70px" }}
+        >
+          <i className={`ri-menu-${isCollapsed ? "unfold" : "fold"}-line`}></i>
+        </button>
         <div className="navigation-section">
           <Link
             to="/"
@@ -109,14 +117,6 @@ const Sidebar = () => {
               src={weblogo}
               alt=""
             />
-            <button
-              className="btn text-white collapse-btn align-item-center justify-content-center ms-1 my-auto"
-              onClick={handleToggleCollapse}
-            >
-              <i
-                className={`ri-menu-${isCollapsed ? "unfold" : "fold"}-line`}
-              ></i>
-            </button>
           </Link>
           <hr />
           <ul

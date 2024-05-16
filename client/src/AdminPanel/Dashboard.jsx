@@ -90,13 +90,12 @@ const Dashboard = () => {
         </Link>
         <Link
           to="/menu"
-          className="general-box mt-5 border border-2 align-items-center justify-content-center d-flex flex-column shadow-xl col-lg-3 col-md-4"
+          className="general-box mt-5 border-2 align-items-center justify-content-center d-flex flex-column shadow-xl col-lg-3 col-md-4"
         >
           <h3>Foods</h3>
           <h3 className="pt-3">
             {loadingFoods && <span>Loading...</span>}
             {errorFoods && <span>{errorFoods}</span>}
-
             {!loadingFoods && !errorFoods && foods?.length}
           </h3>
         </Link>

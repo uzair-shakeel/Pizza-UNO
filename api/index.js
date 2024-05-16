@@ -25,11 +25,28 @@ const PORT = process.env.PORT || 3000;
 app.use(bodayParser.json());
 app.use(cookieParser());
 // Connect to MongoDB with updated options
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => console.log("DB Connected"))
-  .catch((err) => console.log(err));
+// mongoose
+//   .connect(process.env.MONGO_URL)
+//   .then(() => console.log("DB Connected"))
+//   .catch((err) => console.log(err));
 
+const dbConnect = () => {
+  const connectionParams = { useNewUrlParser: true };
+  mongoose.connect(process.env.MONGO_URL, connectionParams);
+
+  mongoose.connection.on("connected", () => {
+    console.log("Connected to database sucessfully");
+  });
+
+  mongoose.connection.on("error", (err) => {
+    console.log("Error while connecting to database :" + err);
+  });
+
+  mongoose.connection.on("disconnected", () => {
+    console.log("Mongodb connection disconnected");
+  });
+};
+dbConnect();
 // Middleware for CORS and JSON parsing
 
 const corsOptions = {
@@ -79,7 +96,6 @@ const upload = multer({
   },
 });
 
-// Function to validate credit card numbers using Modulus 10 algorithm
 function validateCreditCard(cardNumber) {
   // Remove non-digit characters from the card number
   const cleanedCardNumber = cardNumber.replace(/\D/g, "");
@@ -118,6 +134,7 @@ app.post("/payment/checkout", async (req, res) => {
   try {
     const stripe = new Stripe(process.env.SECRET_STRIPE_KEY);
     const { items } = req.body;
+    console.log(session);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
