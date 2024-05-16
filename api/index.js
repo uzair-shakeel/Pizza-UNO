@@ -38,7 +38,7 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // Replace with the actual origin of your frontend
+    origin: allowedOrigins, // Replace with the actual origin of your frontend
     credentials: true, // Allow credentials
   })
 );
