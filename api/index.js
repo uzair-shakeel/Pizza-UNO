@@ -65,7 +65,7 @@ const upload = multer({
 app.post("/payment/checkout", async (req, res) => {
   try {
     const stripe = new Stripe(process.env.SECRET_STRIPE_KEY);
-    const { address, totalAmount, userId, items } = req.body;
+    const { items } = req.body;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -86,9 +86,7 @@ app.post("/payment/checkout", async (req, res) => {
       cancel_url: "http://localhost:5173/payment/cancel",
     });
 
-    console.log(session);
     res.json({ url: session.url });
-    console.log(session);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

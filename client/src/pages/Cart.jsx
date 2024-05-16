@@ -162,10 +162,6 @@ const Cart = () => {
       quantity: 1, // Assuming delivery charges is a fixed amount per order
     };
 
-    const shippingAddress = location;
-    const totalAmount = total;
-    const userId = id;
-
     const requestBody = {
       items: [
         ...userCart.map((item) => ({
@@ -176,9 +172,6 @@ const Cart = () => {
         })),
         deliveryItem,
       ],
-      userId,
-      address: shippingAddress,
-      totalAmount,
     };
 
     try {
