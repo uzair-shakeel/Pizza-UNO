@@ -28,7 +28,11 @@ mongoose
   )
   .then(() => console.log("DB Connected"))
   .catch((err) => console.log(err));
-const allowedOrigins = ["http://localhost:5173", "*"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://pizzauno-api.vercel.app/",
+  "*",
+];
 
 app.use(
   cors({

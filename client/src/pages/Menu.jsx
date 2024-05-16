@@ -63,6 +63,9 @@ const Menu = () => {
     filter === "" ? `${BASE_URL}/food` : `${BASE_URL}/food/category/${filter}`
   );
 
+  console.log("Main", foodData);
+  console.log("Main", error);
+
   return (
     <section>
       <div className="container">
