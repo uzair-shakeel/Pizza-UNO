@@ -81,10 +81,49 @@ const upload = multer({
   },
 });
 
+// Function to validate credit card numbers using Modulus 10 algorithm
+function validateCreditCard(cardNumber) {
+  // Remove non-digit characters from the card number
+  const cleanedCardNumber = cardNumber.replace(/\D/g, "");
+
+  // Check if the length of the cleaned card number is within the valid range
+  if (cleanedCardNumber.length < 12 || cleanedCardNumber.length > 19) {
+    return false;
+  }
+
+  let sum = 0;
+  let isEven = false;
+
+  // Iterate over each digit of the card number from right to left
+  for (let i = cleanedCardNumber.length - 1; i >= 0; i--) {
+    let digit = parseInt(cleanedCardNumber[i]);
+
+    if (isEven) {
+      digit *= 2;
+      if (digit > 9) {
+        digit -= 9;
+      }
+    }
+
+    // Add the digit to the sum
+    sum += digit;
+
+    // Toggle the isEven flag
+    isEven = !isEven;
+  }
+
+  // Check if the sum is divisible by 10
+  return sum % 10 === 0;
+}
+
 app.post("/payment/checkout", async (req, res) => {
   try {
     const stripe = new Stripe(process.env.SECRET_STRIPE_KEY);
     const { items } = req.body;
+
+    if (!validateCreditCard(cardNumber)) {
+      return res.status(400).json({ error: "Invalid credit card number" });
+    }
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
