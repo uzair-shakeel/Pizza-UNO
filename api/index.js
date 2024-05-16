@@ -9,6 +9,8 @@ const foodRoutes = require("./routes/foodRoutes");
 const { createOrder } = require("./controllers/orderController");
 // const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const feedbackRoutes = require("./routes/feedbackRoute");
+const messageRoutes = require("./routes/messageRoutes");
 const cartRoutes = require("./routes/cart");
 const multer = require("multer");
 const dotenv = require("dotenv");
@@ -126,6 +128,8 @@ app.use("/category", categoryRoutes);
 app.use("/food", foodRoutes);
 app.use("/order", orderRoutes);
 app.use("/cart", cartRoutes);
+app.use("/feedback", feedbackRoutes);
+app.use("/message", messageRoutes);
 
 // Start the server
 app.listen(PORT, () => {
