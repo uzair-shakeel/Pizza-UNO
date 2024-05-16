@@ -43,7 +43,7 @@ const Login = () => {
       if (!res.ok) {
         return toast.error(result.message);
       }
-      console.log(result.data.role);
+      console.log(result);
       localStorage.setItem("role", result.data.role);
       dispatch({
         type: "LOGIN_SUCCESS",

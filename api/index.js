@@ -22,7 +22,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(bodayParser.json());
 app.use(cookieParser());
 // Connect to MongoDB with updated options
 // mongoose

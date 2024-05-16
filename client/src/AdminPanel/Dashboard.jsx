@@ -4,61 +4,61 @@ import { Link } from "react-router-dom";
 import { BASE_URL } from "../utils/config";
 
 const Dashboard = () => {
-  const useFetch = (url) => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
+  // const useFetch = (url) => {
+  //   const [data, setData] = useState([]);
+  //   const [error, setError] = useState(null);
+  //   const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-      const fetchData = async () => {
-        setLoading(true);
+  //   useEffect(() => {
+  //     const fetchData = async () => {
+  //       setLoading(true);
 
-        try {
-          const res = await fetch(url, {
-            method: "GET",
-            credentials: "include",
-          });
-          if (!res.ok) {
-            throw new Error(
-              `Failed to fetch data from ${url}. Status: ${res.status} - ${res.statusText}`
-            );
-          }
+  //       try {
+  //         const res = await fetch(url, {
+  //           method: "GET",
+  //           credentials: "include",
+  //         });
+  //         if (!res.ok) {
+  //           throw new Error(
+  //             `Failed to fetch data from ${url}. Status: ${res.status} - ${res.statusText}`
+  //           );
+  //         }
 
-          const result = await res.json();
-          setData(result.data);
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
-        }
-      };
+  //         const result = await res.json();
+  //         setData(result.data);
+  //       } catch (err) {
+  //         setError(err.message);
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     };
 
-      fetchData();
-    }, [url]);
+  //     fetchData();
+  //   }, [url]);
 
-    return { data, loading, error };
-  };
+  //   return { data, loading, error };
+  // };
 
-  const {
-    data: users,
-    loading: loadingUsers,
-    error: errorUsers,
-  } = useFetch(`${BASE_URL}/user/getAllUsers?role=user`);
-  const {
-    data: admins,
-    loading: loadingAdmins,
-    error: errorAdmins,
-  } = useFetch(`${BASE_URL}/user/getAllUsers?role=admin`);
-  const {
-    data: orders,
-    loading: loadingOrders,
-    error: errorOrders,
-  } = useFetch(`${BASE_URL}/order`);
-  const {
-    data: foods,
-    loading: loadingFoods,
-    error: errorFoods,
-  } = useFetch(`${BASE_URL}/food`);
+  // const {
+  //   data: users,
+  //   loading: loadingUsers,
+  //   error: errorUsers,
+  // } = useFetch(`${BASE_URL}/user/getAllUsers?role=user`);
+  // const {
+  //   data: admins,
+  //   loading: loadingAdmins,
+  //   error: errorAdmins,
+  // } = useFetch(`${BASE_URL}/user/getAllUsers?role=admin`);
+  // const {
+  //   data: orders,
+  //   loading: loadingOrders,
+  //   error: errorOrders,
+  // } = useFetch(`${BASE_URL}/order`);
+  // const {
+  //   data: foods,
+  //   loading: loadingFoods,
+  //   error: errorFoods,
+  // } = useFetch(`${BASE_URL}/food`);
 
   return (
     <div className="dashboard container pt-4">
@@ -67,7 +67,7 @@ const Dashboard = () => {
         <h5 className="ps-3 pt-3 mt-5 dashboard-text">General Report</h5>
         <Link
           to="/users"
-          className="general-box mt-5 border border-2 align-items-center justify-content-center d-flex flex-column shadow-xl col-lg-3 col-md-4"
+          className="general-box mt-5 border-2 align-items-center justify-content-center d-flex flex-column shadow-xl col-lg-3 col-md-4"
         >
           <h3>Users</h3>
           <h3 className="pt-3">

@@ -167,7 +167,7 @@ const Header = () => {
                 </li>
               </ul>
 
-              {user ? (
+              {user && !loading && !error && userinfo ? (
                 <>
                   <div className="cart d-flex align-items-center justify-content-center">
                     <NavLink
@@ -195,7 +195,7 @@ const Header = () => {
                       <li>
                         <NavLink
                           className="dropdown-item"
-                          to={`/my-orders/${userinfo?._id}`}
+                          to={`/my-orders/${userinfo._id}`}
                         >
                           My Orders
                         </NavLink>
@@ -233,6 +233,7 @@ const Header = () => {
                   </Link>
                 </div>
               )}
+
             </div>
           </div>
         </div>

@@ -53,13 +53,19 @@ function App() {
     error,
   } = useFetch(`${BASE_URL}/user/getUser/${userId}`);
 
-  if (loading) {
-    return <Spinner />;
-  }
-
-  return (
-    <div>{userData.role === "admin" ? <AdminLayout /> : <ClientLayout />}</div>
-  );
+return (
+  <div>
+    {loading ? (
+      <Spinner />
+    ) : error ? (
+      <div>Error: {error}</div>
+    ) : userData && userData.role === "admin" ? (
+      <AdminLayout />
+    ) : (
+      <ClientLayout />
+    )}
+  </div>
+);
 }
 
 export default App;
