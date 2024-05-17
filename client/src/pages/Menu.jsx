@@ -15,20 +15,6 @@ const Menu = () => {
     window.scrollTo(0, -1);
   }, []);
 
-  useEffect(() => {
-    const scrollToTop = () => {
-      const scrollStep = -window.scrollY;
-      const scrollInterval = setInterval(() => {
-        if (window.scrollY !== 0) {
-          window.scrollBy(0, scrollStep);
-        } else {
-          clearInterval(scrollInterval);
-        }
-      });
-    };
-    scrollToTop();
-  }, [location]);
-
   // Fetch categories from the backend
   useEffect(() => {
     const fetchCategories = async () => {

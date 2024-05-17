@@ -44,7 +44,7 @@ const Faq = () => {
                   </h2>
                   <div id="collapseThree" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div className="accordion-body">
-                    Our operating hours vary by location, but generally, we are open seven days a week from 10:00 AM to 10:00 PM. You can find the specific hours for your nearest location on our website.
+                    Our operating hours vary by location, but generally, we are open seven days a week from 15:45 to 01:00. You can find the specific hours for your nearest location on our website.
                     </div>
                   </div>
                 </div>

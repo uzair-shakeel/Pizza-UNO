@@ -166,7 +166,7 @@ const Sidebar = () => {
                 to="/messages"
                 className="nav-link sidebar-link text-white"
               >
-                <i className={`ri-group-line ${isCollapsed ? "" : "pe-2"}`}></i>
+                <i className={`ri-chat-2-line ${isCollapsed ? "" : "pe-2"}`}></i>
                 {isCollapsed ? "" : "Messages"}
               </NavLink>
             </li>
@@ -175,7 +175,7 @@ const Sidebar = () => {
                 to="/feedbacks"
                 className="nav-link sidebar-link text-white"
               >
-                <i className={`ri-group-line ${isCollapsed ? "" : "pe-2"}`}></i>
+                <i className={`ri-feedback-line ${isCollapsed ? "" : "pe-2"}`}></i>
                 {isCollapsed ? "" : "Feedbacks"}
               </NavLink>
             </li>
