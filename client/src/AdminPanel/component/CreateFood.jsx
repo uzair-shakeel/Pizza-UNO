@@ -61,6 +61,7 @@ const CreateFood = () => {
           if (!response.ok) {
             throw new Error("Failed to upload image");
           }
+          console.log(response);
 
           const imageData = await response.json();
           menuData.image = imageData.file.filename; // Assuming backend returns the filename
