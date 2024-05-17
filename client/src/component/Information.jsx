@@ -4,8 +4,6 @@ const Information = () => {
   return (
     <div className="">
             <div className="">
-                <button className="close-button">
-jn fdgd                </button>
                 <div className='modal-content'>
                     <h3 className="title">Information</h3>
                     <div>
@@ -17,7 +15,7 @@ jn fdgd                </button>
                     <div>
                         <h3 className='section-title'>Collection</h3>
                         <ul className='list'>
-                            <li className='list-item'>Approx: 45 min</li>
+                            <li className='list-item'>Approx: 15 min</li>
                         </ul>
                     </div>
                     <div className="mt-2">
