@@ -32,7 +32,7 @@ router.get("/elite", getEliteFood);
 router.get("/new", getNewFood);
 
 // Create a new food item
-router.post("/create", protect, verifyAdmin, createFood);
+router.post("/create", createFood);
 
 // Update a specific food item by ID
 router.put("/:foodId", protect, verifyAdmin, updateFoodById);
