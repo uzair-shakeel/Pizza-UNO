@@ -146,7 +146,7 @@ const Register = () => {
 
                   <div className="form-group mb-3">
                     <input
-                      type="number"
+                      type="text"
                       placeholder="Postcode"
                       id="postcode"
                       onChange={handleChange}
