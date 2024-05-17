@@ -38,6 +38,16 @@ const CreateFood = () => {
       return;
     } else {
       try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token not found in cookies");
+        }
+
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
+
         if (menuData.image) {
           const formData = new FormData();
           formData.append("file", menuData.image);
@@ -45,33 +55,23 @@ const CreateFood = () => {
           const response = await fetch(`${BASE_URL}/upload`, {
             method: "POST",
             body: formData,
+            headers: headers,
           });
 
           if (!response.ok) {
             throw new Error("Failed to upload image");
           }
+          console.log(response);
 
           const imageData = await response.json();
           menuData.image = imageData.file.filename; // Assuming backend returns the filename
         }
 
-         const token = localStorage.getItem("token");
-         if (!token) {
-           throw new Error("Token not found in cookies");
-         }
-
-         const headers = {
-           "Content-Type": "application/json",
-           Authorization: `Bearer ${token}`,
-         };
         const response = await fetch(`${BASE_URL}/food/create`, {
           method: "post",
-          headers: {
-            "Content-Type": "application/json",
-          },
           credentials: "include",
           body: JSON.stringify(menuData),
-          headers: headers
+          headers: headers,
         });
 
         const { message } = await response.json();

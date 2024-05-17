@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "../utils/config";
 
 const ContactUs = () => {
+  useEffect(() => {
+    window.scrollTo(0, -1);
+  }, []);
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",

@@ -9,14 +9,15 @@ jn fdgd                </button>
                 <div className='modal-content'>
                     <h3 className="title">Information</h3>
                     <div>
-                        <h3 className='section-title'>Minimum Order For Delivery</h3>
+                        <h3 className='section-title'>Home Delivery</h3>
                         <ul className='list'>
-                            <li className='list-item'>£0.00 SR1</li>
-                            <li className='list-item'>£0.00 SR2</li>
-                            <li className='list-item'>£0.00 SR3</li>
-                            <li className='list-item'>£0.00 SR4</li>
-                            <li className='list-item'>£0.00 SR5</li>
-                            <li className='list-item'>£0.00 SR6</li>
+                            <li className='list-item'>Approx: 45 min</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 className='section-title'>Collection</h3>
+                        <ul className='list'>
+                            <li className='list-item'>Approx: 45 min</li>
                         </ul>
                     </div>
                     <div className="mt-2">
