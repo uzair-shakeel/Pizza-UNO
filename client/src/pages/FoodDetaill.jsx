@@ -150,15 +150,15 @@ const FoodDetaill = () => {
         category: food && food.category,
       };
 
-       const token = localStorage.getItem("token");
-       if (!token) {
-         throw new Error("Token not found in cookies");
-       }
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token not found in cookies");
+      }
 
-       const headers = {
-         "Content-Type": "application/json",
-         Authorization: `Bearer ${token}`,
-       };
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
 
       const response = await fetch(`${BASE_URL}/cart/addtocart`, {
         method: "post",
@@ -167,7 +167,7 @@ const FoodDetaill = () => {
         },
         credentials: "include",
         body: JSON.stringify(cartItem),
-        headers: headers
+        headers: headers,
       });
 
       const result = await response.json();
@@ -202,7 +202,7 @@ const FoodDetaill = () => {
             <div className="col-md-7 col-12 mb-3 mb-md-0">
               <img
                 className="food-item-img  img-fluid rounded-2"
-                src={`../../public/uploads/${image}`}
+                src={`/uploads/${image}`}
                 alt="FoodImg"
               />
             </div>
