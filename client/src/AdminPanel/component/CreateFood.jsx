@@ -55,6 +55,15 @@ const CreateFood = () => {
           menuData.image = imageData.file.filename; // Assuming backend returns the filename
         }
 
+         const token = localStorage.getItem("token");
+         if (!token) {
+           throw new Error("Token not found in cookies");
+         }
+
+         const headers = {
+           "Content-Type": "application/json",
+           Authorization: `Bearer ${token}`,
+         };
         const response = await fetch(`${BASE_URL}/food/create`, {
           method: "post",
           headers: {
@@ -62,6 +71,7 @@ const CreateFood = () => {
           },
           credentials: "include",
           body: JSON.stringify(menuData),
+          headers: headers
         });
 
         const { message } = await response.json();

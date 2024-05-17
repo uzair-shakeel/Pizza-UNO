@@ -11,9 +11,19 @@ const Orders = () => {
 
   const fetchUsername = async (userId) => {
     try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token not found in cookies");
+      }
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
       const res = await fetch(`${BASE_URL}/user/getUser/${userId}`, {
         method: "GET",
         credentials: "include",
+        headers: headers,
       });
 
       if (!res.ok) {
@@ -33,9 +43,19 @@ const Orders = () => {
     setLoading(true);
 
     try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token not found in cookies");
+      }
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
       const ordersResponse = await fetch(`${BASE_URL}/order?status=${status}`, {
         method: "GET",
         credentials: "include",
+        headers: headers,
       });
 
       if (!ordersResponse.ok) {
@@ -67,13 +87,20 @@ const Orders = () => {
 
   const handleAction = async (orderId, newStatus) => {
     try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token not found in cookies");
+      }
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
       const response = await fetch(`${BASE_URL}/order/orders/${orderId}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
         credentials: "include",
-        body: JSON.stringify({ status: newStatus.toLowerCase() }), // Convert to lowercase
+        body: JSON.stringify({ status: newStatus.toLowerCase() }),
       });
 
       const { message } = await response.json();

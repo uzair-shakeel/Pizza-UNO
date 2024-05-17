@@ -26,13 +26,22 @@ export const FoodCard = ({ item }) => {
           category: category,
         };
 
+         const token = localStorage.getItem("token");
+         if (!token) {
+           throw new Error("Token not found in cookies");
+         }
+
+         const headers = {
+           "Content-Type": "application/json",
+           Authorization: `Bearer ${token}`,
+         };
+
         const response = await fetch(`${BASE_URL}/cart/addtocart`, {
           method: "post",
-          headers: {
-            "content-type": "application/json",
-          },
+          headers: headers,
           credentials: "include",
           body: JSON.stringify(cartItem),
+
         });
         console.log("run");
         const result = await response.json();

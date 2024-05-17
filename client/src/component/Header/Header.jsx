@@ -8,93 +8,51 @@ import { toast } from "react-toastify";
 import { BASE_URL } from "../../utils/config";
 
 const Header = () => {
-  useEffect(() => {
-    let prevScrollpos = window.pageYOffset;
-
-    const handleScroll = () => {
-      const currentScrollPos = window.pageYOffset;
-      const navbar = document.querySelector(".navbar");
-
-      if (currentScrollPos > 0) {
-        // Add shadow class when scrolling down
-        navbar.classList.add("shadow");
-      } else {
-        // Remove shadow class when at the top
-        navbar.classList.remove("shadow");
-      }
-
-      if (prevScrollpos > currentScrollPos) {
-        navbar.style.top = "0";
-      } else {
-        navbar.style.top = "-80px";
-
-        // Close the Navbar when scrolling down
-        const togglerButton = document.querySelector(".navbar-toggler");
-        const navbarCollapse = document.querySelector(
-          "#navbarSupportedContent"
-        );
-
-        if (togglerButton.classList.contains("offcanvas")) {
-          togglerButton.classList.remove("offcanvas");
-          navbarCollapse.classList.remove("show");
-        }
-      }
-
-      prevScrollpos = currentScrollPos;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      // Cleanup the event listener when the component is unmounted
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   const navigate = useNavigate();
-
-  const useFetch = (url) => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-      const fetchData = async () => {
-        setLoading(true);
-
-        try {
-          const res = await fetch(url, {
-            method: "GET",
-            credentials: "include",
-          });
-          if (!res.ok) {
-            throw new Error(
-              `Failed to fetch data from ${url}. Status: ${res.status} - ${res.statusText}`
-            );
-          }
-
-          const result = await res.json();
-          setData(result.data);
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchData();
-    }, [url]);
-
-    return { data, loading, error };
-  };
-
   const { user, dispatch } = useContext(AuthContext);
-  console.log(user);
-  const {
-    data: userinfo,
-    loading,
-    error,
-  } = useFetch(user ? `${BASE_URL}/user/getUser/${user?._id}` : null);
+  const [userinfo, setUserinfo] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      console.log("Hello!");
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token not found in cookies");
+        }
+
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
+        const res = await fetch(`${BASE_URL}/user/getUser/${user?._id}`, {
+          method: "GET",
+          credentials: "include",
+          headers: headers,
+        });
+
+        if (!res.ok) {
+          throw new Error(
+            `Failed to fetch data from ${url}. Status: ${res.status} - ${res.statusText}`
+          );
+        }
+
+        const result = await res.json();
+        setUserinfo(result.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user) {
+      fetchData();
+    }
+  }, [user]);
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
@@ -102,7 +60,6 @@ const Header = () => {
     navigate("/");
   };
 
-  console.log(error);
   return (
     <>
       <div className="d-block navbar-behind"></div>
@@ -153,9 +110,6 @@ const Header = () => {
                     Menu
                   </NavLink>
                 </li>
-                {/* <li className="nav-item mx-auto mx-md-2">
-            <NavLink className="nav-link" to="/about">About</NavLink>
-          </li> */}
                 <li className="nav-item mx-auto mx-md-2">
                   <NavLink className="nav-link" to="/feedback">
                     Feedback

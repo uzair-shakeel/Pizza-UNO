@@ -3,9 +3,20 @@ import { toast } from 'react-toastify';
 
   const deleteData = async (url) => {
     try {
+
+       const token = localStorage.getItem("token");
+       if (!token) {
+         throw new Error("Token not found in cookies");
+       }
+
+       const headers = {
+         "Content-Type": "application/json",
+         Authorization: `Bearer ${token}`,
+       };
       const res = await fetch(url, {
         method: 'DELETE',
         credentials: 'include',
+        headers: headers
       });
 
       if (!res.ok) {

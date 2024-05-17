@@ -15,9 +15,19 @@ const Admins = () => {
       setLoading(true);
 
       try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+              throw new Error("Token not found in cookies");
+            }
+
+            const headers = {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            };
         const res = await fetch(url, {
           method: "GET",
           credentials: "include",
+          headers: headers
         });
         if (!res.ok) {
           throw new Error(
@@ -51,12 +61,19 @@ const Admins = () => {
   const handleChangeRole = async (adminId, value) => {
     try {
       // Make the API call to update the role to 'user'
+          const token = localStorage.getItem("token");
+          if (!token) {
+            throw new Error("Token not found in cookies");
+          }
+
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          };
       await fetch(`${BASE_URL}/user/updateRoleToUser/${adminId}`, {
         method: "PUT",
         credentials: "include", // Include credentials if needed
-        headers: {
-          "Content-Type": "application/json", // Specify JSON content type
-        },
+        headers: headers,
         body: JSON.stringify({ role: "user" }), // Include the new role value in the request body
       });
       toast.success("Successfully Updated.");

@@ -18,6 +18,11 @@
   margin-right: 20px;
 }
 
+/* Hide scrollbar for WebKit browsers */
+.sidebar-wrapper::-webkit-scrollbar {
+  width: 0; /* Set width to 0 to hide scrollbar */
+}
+
 .wrapper {
   transition: all 0.4s ease-in-out;
 }

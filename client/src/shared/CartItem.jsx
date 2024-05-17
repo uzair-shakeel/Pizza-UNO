@@ -89,9 +89,19 @@ const CartItem = ({ cart, quantityChanges }) => {
 
   const handleRemove = async (_id) => {
     try {
+       const token = localStorage.getItem("token");
+       if (!token) {
+         throw new Error("Token not found in cookies");
+       }
+
+       const headers = {
+         "Content-Type": "application/json",
+         Authorization: `Bearer ${token}`,
+       };
       const response = await fetch(`${BASE_URL}/cart/${_id}`, {
         method: "DELETE",
         credentials: "include",
+        headers: headers
       });
 
       const { message } = await response.json();

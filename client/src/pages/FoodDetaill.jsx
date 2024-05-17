@@ -150,6 +150,16 @@ const FoodDetaill = () => {
         category: food && food.category,
       };
 
+       const token = localStorage.getItem("token");
+       if (!token) {
+         throw new Error("Token not found in cookies");
+       }
+
+       const headers = {
+         "Content-Type": "application/json",
+         Authorization: `Bearer ${token}`,
+       };
+
       const response = await fetch(`${BASE_URL}/cart/addtocart`, {
         method: "post",
         headers: {
@@ -157,6 +167,7 @@ const FoodDetaill = () => {
         },
         credentials: "include",
         body: JSON.stringify(cartItem),
+        headers: headers
       });
 
       const result = await response.json();

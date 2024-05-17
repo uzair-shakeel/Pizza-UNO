@@ -60,28 +60,37 @@ const UpdateFood = () => {
       return;
     }
     try {
-      if (foodData.image) {
-        const formData = new FormData();
-        formData.append("file", foodData.image);
+      // if (foodData.image) {
+      //   const formData = new FormData();
+      //   formData.append("file", foodData.image);
 
-        const response = await fetch(`${BASE_URL}/upload`, {
-          method: "POST",
-          body: formData,
-        });
+        
+      //   const response = await fetch(`${BASE_URL}/upload`, {
+      //     method: "POST",
+      //     body: formData,
+      //   });
 
-        if (!response.ok) {
-          throw new Error("Failed to upload image");
-        }
+      //   if (!response.ok) {
+      //     throw new Error("Failed to upload image");
+      //   }
 
-        const imageData = await response.json();
-        foodData.image = imageData.file.filename; // Assuming backend returns the filename
-      }
+      //   const imageData = await response.json();
+      //   foodData.image = imageData.file.filename; // Assuming backend returns the filename
+      // }
+
+       const token = localStorage.getItem("token");
+       if (!token) {
+         throw new Error("Token not found in cookies");
+       }
+
+       const headers = {
+         "Content-Type": "application/json",
+         Authorization: `Bearer ${token}`,
+       };
 
       const response = await fetch(`${BASE_URL}/food/${id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
         credentials: "include",
         body: JSON.stringify(foodData),
       });
@@ -158,7 +167,7 @@ const UpdateFood = () => {
                     onChange={handleChange}
                   />
                 </div>
-                <div className="input-group mb-3">
+                {/* <div className="input-group mb-3">
                   <label
                     className="input-group-text"
                     htmlFor="inputGroupFile01"
@@ -175,7 +184,7 @@ const UpdateFood = () => {
                       setFoodData({ ...foodData, image: e.target.files[0] })
                     }
                   />
-                </div>
+                </div> */}
                 <div className="justify-content-end d-flex">
                   <button
                     type="submit"

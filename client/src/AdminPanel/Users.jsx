@@ -14,9 +14,20 @@ const Users = () => {
       setLoading(true);
 
       try {
+
+          const token = localStorage.getItem("token");
+          if (!token) {
+            throw new Error("Token not found in cookies");
+          }
+
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          };
         const res = await fetch(url, {
           method: "GET",
           credentials: "include",
+          headers: headers
         });
         if (!res.ok) {
           throw new Error(
@@ -71,9 +82,19 @@ const Users = () => {
 
   const orderCount = async (userId) => {
     try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token not found in cookies");
+        }
+
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
       const res = await fetch(`${BASE_URL}/order/ordersbyid/${userId}`, {
         method: "GET",
         credentials: "include",
+        headers: headers
       });
 
       if (!res.ok) {
