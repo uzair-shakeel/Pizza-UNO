@@ -26,22 +26,21 @@ export const FoodCard = ({ item }) => {
           category: category,
         };
 
-         const token = localStorage.getItem("token");
-         if (!token) {
-           throw new Error("Token not found in cookies");
-         }
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token not found in cookies");
+        }
 
-         const headers = {
-           "Content-Type": "application/json",
-           Authorization: `Bearer ${token}`,
-         };
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
 
         const response = await fetch(`${BASE_URL}/cart/addtocart`, {
           method: "post",
           headers: headers,
           credentials: "include",
           body: JSON.stringify(cartItem),
-
         });
         console.log("run");
         const result = await response.json();
@@ -66,8 +65,9 @@ export const FoodCard = ({ item }) => {
         <button className="cart-icon" onClick={() => handleAddToCart(_id)}>
           <i className="ri-shopping-cart-fill"></i>
         </button>
+
         <img
-          src={`../../public/uploads/${image}`}
+          src={`/uploads/${image}`}
           className="card-img-top img-fluid"
           alt="CardImg"
         />
