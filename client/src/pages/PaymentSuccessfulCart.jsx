@@ -307,7 +307,6 @@ const PaymentSuccessCart = () => {
                     userCart.length === 0 ? "disabled" : ""
                   }checkout-btn px-4 btn w-100 btn-primary flex-grow-1 mb-2 d-flex align-items-center justify-content-between`}
                 >
-                  <span>Rs.{total}</span>
                   <span>
                     Confirm Order<i className="ri-arrow-right-line"></i>
                   </span>
