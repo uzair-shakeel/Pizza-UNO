@@ -85,9 +85,6 @@ const Header = () => {
             aria-labelledby="offcanvasNavbarLabel"
           >
             <div className="offcanvas-header">
-              <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
-                Chilli Panda
-              </h5>
               <button
                 type="button"
                 className="btn-close"
