@@ -184,7 +184,7 @@ const Header = () => {
                     to="/login"
                     className="btn-signin btn btn-primary mx-auto"
                   >
-                    SignIn
+                    Login
                   </Link>
                 </div>
               )}
