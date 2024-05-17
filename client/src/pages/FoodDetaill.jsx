@@ -72,7 +72,6 @@ const FoodDetaill = () => {
     loading: userLoading,
     error: userError,
   } = useFetch2(user ? `${BASE_URL}/user/getUser/${user._id}` : null);
-  console.log(userinfo);
 
   const handleQuantityChange = (action) => {
     if (action === "increase") {
@@ -134,49 +133,48 @@ const FoodDetaill = () => {
     }
   };
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (foodId) => {
     try {
-      if (!userinfo) {
+      if (!user) {
         return toast.error("Please Sign-In");
+      } else {
+        const cartItem = {
+          userId: user._id,
+          foodId: foodId,
+          foodName: name,
+          quantity: 1,
+          price: price,
+          photo: image,
+          category: category,
+        };
+        console.log(cartItem);
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token not found in cookies");
+        }
+
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
+
+        const response = await fetch(`${BASE_URL}/cart/addtocart`, {
+          method: "post",
+          headers: headers,
+          credentials: "include",
+          body: JSON.stringify(cartItem),
+        });
+        console.log("run");
+        const result = await response.json();
+
+        if (!response.ok) {
+          return toast.error(
+            result.message || "Failed to add item to the cart"
+          );
+        }
+
+        toast.success("Item added in cart");
       }
-
-      const cartItem = {
-        userId: userinfo._id,
-        foodId: id,
-        foodName: food && food.name,
-        quantity: quantity,
-        price: food && food.price,
-        photo: food && food.image,
-        category: food && food.category,
-      };
-
-      const token = localStorage.getItem("token");
-      if (!token) {
-        throw new Error("Token not found in cookies");
-      }
-
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      };
-
-      const response = await fetch(`${BASE_URL}/cart/addtocart`, {
-        method: "post",
-        headers: {
-          "content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(cartItem),
-        headers: headers,
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        return toast.error(result.message || "Failed to add item to the cart");
-      }
-
-      toast.success("Item added in cart");
     } catch (error) {
       console.error(error);
       toast.error("An error occurred while processing your request");
@@ -185,8 +183,8 @@ const FoodDetaill = () => {
 
   const handleOrder = async (e) => {
     e.preventDefault();
-    await handleAddToCart();
-    Navigate(`/cart/${userinfo._id}`);
+    await handleAddToCart(id);
+    Navigate(`${BASE_URL}/cart/${user._id}`);
   };
 
   return (
@@ -271,7 +269,10 @@ const FoodDetaill = () => {
                 </h5>
               </div>
               <div className="d-flex justify-content-between mt-4 gap-3">
-                <button className="btn btn-warning" onClick={handleAddToCart}>
+                <button
+                  className="btn btn-warning"
+                  onClick={() => handleAddToCart(id)}
+                >
                   <i className="ri-shopping-cart-line"></i> Add to Cart
                 </button>
                 <Link className="btn order-btn btn-light" onClick={handleOrder}>
