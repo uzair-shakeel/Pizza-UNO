@@ -79,11 +79,11 @@ app.use(express.json());
 
 // Set storage engine for multer
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "/tmp"); // Use /tmp directory in Vercel
+  destination: function (req, file, cb) {
+    cb(null, "../client/public/uploads/"); // Destination folder
   },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); // File name with timestamp
   },
 });
 
