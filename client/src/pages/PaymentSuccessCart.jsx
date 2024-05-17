@@ -26,9 +26,20 @@ const PaymentSuccessCart = () => {
         setLoading(true);
 
         try {
+          const token = localStorage.getItem("token");
+          if (!token) {
+            throw new Error("Token not found in cookies");
+          }
+
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          };
+
           const res = await fetch(url, {
             method: "GET",
             credentials: "include",
+            headers: headers,
           });
 
           if (!res.ok) {
@@ -70,9 +81,19 @@ const PaymentSuccessCart = () => {
       setLoading(true);
 
       try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token not found in cookies");
+        }
+
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
         const res = await fetch(url, {
           method: "GET",
           credentials: "include",
+          headers: headers,
         });
 
         if (!res.ok) {
@@ -136,7 +157,7 @@ const PaymentSuccessCart = () => {
   useEffect(() => {
     // Trigger the refetch of userCart when quantity changes
     quantityChanges();
-  }, []); // Remov
+  }, []);
 
   useEffect(() => {
     if (userCart.length !== 0 && !cartLoading && !cartError) {
@@ -169,11 +190,19 @@ const PaymentSuccessCart = () => {
     const totalAmount = total;
 
     try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token not found in cookies");
+      }
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
       const response = await fetch(`${BASE_URL}/order`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
         credentials: "include",
         body: JSON.stringify({ userId, items, shippingAddress, totalAmount }),
       });
@@ -196,6 +225,12 @@ const PaymentSuccessCart = () => {
     } catch (error) {
       console.error("Error creating order:", error);
     }
+  };
+
+  const [activeTab, setActiveTab] = useState(0);
+
+  const handleTabChange = (index) => {
+    setActiveTab(index);
   };
 
   return (
@@ -278,6 +313,103 @@ const PaymentSuccessCart = () => {
               ></i>
             </span>
             <hr />
+            <div className="your-order-container">
+              <h3>YOUR ORDER</h3>
+              <h5>Store opens at 03:45 pm</h5>
+
+              <div>
+                {/* Tabs */}
+                <div style={{ display: "flex", width: "100%" }}>
+                  <div
+                    style={{
+                      flex: "1",
+                      height: "70px",
+                      padding: "10px",
+                      cursor: "pointer",
+                      textAlign: "center",
+                      border: "1px solid black",
+                      backgroundColor:
+                        activeTab === 0 ? "#90E051" : "transparent",
+                    }}
+                    onClick={() => handleTabChange(0)}
+                  >
+                    Home Delivery
+                    <p style={{ fontSize: "15px" }}>Starts at: 04:30 pm</p>
+                  </div>
+                  <div
+                    style={{
+                      flex: "1",
+                      cursor: "pointer",
+                      height: "70px",
+                      padding: "10px",
+                      textAlign: "center",
+                      border: "1px solid black",
+                      backgroundColor:
+                        activeTab === 1 ? "#90E051" : "transparent",
+                    }}
+                    onClick={() => handleTabChange(1)}
+                  >
+                    Collection
+                    <p style={{ fontSize: "15px" }}>Starts at : 04:00 pm</p>
+                  </div>
+                </div>
+
+                {/* Tabs content */}
+                <div style={{ margin: "10px 0" }}>
+                  {activeTab === 0 && (
+                    <div>
+                      <p>Enter Delivery PostCode</p>
+                      <input
+                        type="text"
+                        placeholder="Enter Placeholder"
+                        style={{
+                          border: "1px solid black",
+                          padding: "4px 4px",
+                          width: "100%",
+                        }}
+                      />
+                      <button
+                        style={{
+                          backgroundColor: "#90E051",
+                          width: "80%",
+                          height: "50px",
+                          marginTop: "20px",
+                          border: "none",
+                          borderRadius: "10px",
+                        }}
+                      >
+                        CHECK DELIVERY
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  {activeTab === 1 && (
+                    <div>
+                      <p>Collection Time</p>
+                      <div style={{ width: "100%" }}>
+                        <select
+                          style={{
+                            width: "100%",
+                            height: "30px",
+                            padding: "0 5px",
+                          }}
+                        >
+                          <option>04:00 PM (Friday)</option>
+                          <option>04:00 PM (Friday)</option>
+                          <option>04:00 PM (Friday)</option>
+                          <option>04:00 PM (Friday)</option>
+                          <option>04:00 PM (Friday)</option>
+                          <option>04:00 PM (Friday)</option>
+                          <option>04:00 PM (Friday)</option>
+                        </select>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <hr />
             <form>
               <div className="address-field form-group mb-3">
                 <h6>Address:</h6>
@@ -295,15 +427,15 @@ const PaymentSuccessCart = () => {
                 <div className="list-group">
                   <div className="list-group-item d-flex justify-content-between border-0 px-0">
                     <h6>SubTotal</h6>
-                    <span> Rs.{subtotal}</span>
+                    <span> €{subtotal}</span>
                   </div>
                   <div className="list-group-item d-flex justify-content-between border-0 px-0">
                     <h6>Delivery Charges </h6>
-                    <span> Rs.{deleverycharges}</span>
+                    <span> €{deleverycharges}</span>
                   </div>
                   <div className="list-group-item d-flex justify-content-between border-0 px-0">
                     <h6>Total Amount</h6>
-                    <span> Rs.{total}</span>
+                    <span> €{total}</span>
                   </div>
                 </div>
                 <button
@@ -312,7 +444,7 @@ const PaymentSuccessCart = () => {
                     userCart.length === 0 ? "disabled" : ""
                   }checkout-btn px-4 btn w-100 btn-primary flex-grow-1 mb-2 d-flex align-items-center justify-content-between`}
                 >
-                  <span>Rs.{total}</span>
+                  <span>€{total}</span>
                   <span>
                     Confirm Order<i className="ri-arrow-right-line"></i>
                   </span>

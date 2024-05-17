@@ -134,7 +134,6 @@ app.post("/payment/checkout", async (req, res) => {
   try {
     const stripe = new Stripe(process.env.SECRET_STRIPE_KEY);
     const { items } = req.body;
-    console.log(session);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],

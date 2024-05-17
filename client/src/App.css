@@ -554,3 +554,55 @@ a {
     z-index: 10001px;
     position: absolute;
 }
+
+/* Payment ORDEr */
+.your-order-container{
+    text-align: center;
+}
+.your-order-container h3{
+ font-size: 18px;   
+}
+.your-order-container h5{
+ font-size: 15px;   
+}
+
+.tabs-container-order{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+}
+.tab1{
+    flex:1;
+    height:'60px';
+}
+.tab2{
+    flex:1;
+    height:'60px';
+}
+.tabs-container {
+  display: flex;
+}
+
+.tab {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.tab-title {
+  padding: 10px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+.tab-title.active {
+  background-color: #fff;
+}
+
+.tab-content {
+  padding: 10px;
+}
+

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import "./footer.css";
 import { AuthContext } from "../../context/AuthContext";
 import logo from "../../assets/images/logo.png";
+import Appstore from "../../assets/images/appstore.png";
+import Playstore from "../../assets/images/gplay.png";
 import { toast } from "react-toastify";
 
 const Footer = () => {
@@ -86,6 +88,10 @@ const Footer = () => {
                         >
                           01915100176
                         </a>
+                        <div style={{display:'flex', marginTop:'20px', gap:'10px'}}>
+                          <img src={Appstore} alt="Logo" />
+                          <img src={Playstore} alt="Logo" />
+                        </div>
                       </div>
                       <div className="col-md-4 col-lg-3 mx-auto mb-4 foot-texts footer-quick-links">
                         {/* <h6 className="text-uppercase footer-heading footer-link-title fw-bold mb-4">Explore</h6> */}
