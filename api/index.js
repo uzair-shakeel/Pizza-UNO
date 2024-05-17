@@ -80,7 +80,7 @@ app.use(express.json());
 // Set storage engine for multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "../client/public/uploads");
+    cb(null, "/tmp");
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
