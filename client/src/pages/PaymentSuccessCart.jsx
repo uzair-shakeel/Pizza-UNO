@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../utils/config";
 import "../styles/cart.css";
 import CartItem from "../shared/CartItem";
-
+import { postcodes } from "../utils/postcodes";
 import { toast } from "react-toastify";
 
 const modalStyles = {
@@ -41,7 +41,10 @@ const PaymentSuccessCart = () => {
   const data = localStorage.getItem("user");
   const userData = JSON.parse(data);
   const id = userData._id;
-  console.log(id);
+  const allPostcodes = postcodes.map((postcode) => postcode.postcode);
+
+  // Log the new array containing all postcodes
+  console.log(allPostcodes);
 
   const useInitialFetch = (url) => {
     const [data, setData] = useState([]);
@@ -96,8 +99,6 @@ const PaymentSuccessCart = () => {
     loading: cartLoading,
     error: cartError,
   } = useInitialFetch(`${BASE_URL}/cart/${id}`);
-
-  console.log("hii", userCart);
 
   const useFetch2 = (url) => {
     const [data, setData] = useState([]);
@@ -218,6 +219,10 @@ const PaymentSuccessCart = () => {
       toast.info("The address is required");
       return false;
     }
+    if (!postcode) {
+      toast.info("The postcode is required");
+      return false;
+    }
     const userId = id;
     const items = userCart?.map((item) => ({
       product: item.foodId,
@@ -249,11 +254,11 @@ const PaymentSuccessCart = () => {
         toast.error("Server Response is not ok");
       } else {
         const data = await response.json();
-        console.log(data);
 
         const res = await fetch(`${BASE_URL}/cart/${id}`, {
           method: "DELETE",
           credentials: "include",
+          headers: headers,
         });
         if (!res.ok) {
           toast.error("Failed to remove cart items after order");
@@ -272,11 +277,7 @@ const PaymentSuccessCart = () => {
   const handlePostcodeChange = (e) => {
     const value = e.target.value;
     setPostcode(value);
-    setPostcodeValid(
-      typeof value === "string" &&
-        value.trim().length >= 5 && // Check if length is more than 5
-        /\D/.test(value) // Check if it contains at least one non-numeric character
-    );
+    setPostcodeValid(allPostcodes.includes(value));
   };
 
   const handleTabChange = (index) => {

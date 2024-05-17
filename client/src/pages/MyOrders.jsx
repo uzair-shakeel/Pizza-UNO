@@ -21,9 +21,20 @@ const MyOrders = () => {
         setLoading(true);
 
         try {
+          const token = localStorage.getItem("token");
+          if (!token) {
+            throw new Error("Token not found in cookies");
+          }
+
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          };
+
           const res = await fetch(url, {
             method: "GET",
             credentials: "include",
+            headers: headers,
           });
 
           if (!res.ok) {
