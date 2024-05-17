@@ -70,7 +70,7 @@ const Login = () => {
           <div className="col-lg-8 m-auto col-12">
             <div className="login-container d-flex justify-content-between">
               <div className="login-form ">
-                <div className="user">
+                <div className="user" style={{ top: "-60px" }}>
                   <img
                     className="rounded-circle img-fluid"
                     src={userIcon}

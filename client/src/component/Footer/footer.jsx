@@ -88,9 +88,26 @@ const Footer = () => {
                         >
                           01915100176
                         </a>
-                        <div style={{display:'flex', marginTop:'20px', gap:'10px'}}>
-                          <img src={Appstore} alt="Logo" />
-                          <img src={Playstore} alt="Logo" />
+                        <div
+                          style={{
+                            display: "flex",
+                            marginTop: "20px",
+                            gap: "10px",
+                          }}
+                        >
+                          <a
+                            target="_blank"
+                            href="https://apps.apple.com/gb/app/pizza-uno-sunderland/id6450704975
+                          "
+                          >
+                            <img src={Appstore} alt="Logo" />
+                          </a>
+                          <a
+                            target="_blank"
+                            href="https://play.google.com/store/apps/details?id=uk.co.etakeawaymax.pizzaunosunderland&pli=1"
+                          >
+                            <img src={Playstore} alt="Logo" />
+                          </a>
                         </div>
                       </div>
                       <div className="col-md-4 col-lg-3 mx-auto mb-4 foot-texts footer-quick-links">
