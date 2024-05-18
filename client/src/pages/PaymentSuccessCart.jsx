@@ -185,7 +185,7 @@ const PaymentSuccessCart = () => {
       setSubtotal(calculatedSubtotal);
 
       // Calculate total
-      const calculatedTotal = calculatedSubtotal + deleverycharges;
+      const calculatedTotal = (calculatedSubtotal + deleverycharges).toFixed(2);
       setTotal(calculatedTotal);
 
       // Trigger the refetch of userCart

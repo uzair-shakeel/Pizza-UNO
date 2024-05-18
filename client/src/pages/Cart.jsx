@@ -155,7 +155,7 @@ const Cart = () => {
   useEffect(() => {
     // Trigger the refetch of userCart when quantity changes
     quantityChanges();
-  }, []); // Remov
+  }, []);
 
   useEffect(() => {
     if (userCart.length !== 0 && !cartLoading && !cartError) {
@@ -167,7 +167,7 @@ const Cart = () => {
       setSubtotal(calculatedSubtotal);
 
       // Calculate total
-      const calculatedTotal = calculatedSubtotal + deleverycharges;
+      const calculatedTotal = (calculatedSubtotal + deleverycharges).toFixed(2);
       setTotal(calculatedTotal);
     }
   }, [userCart, cartLoading, cartError]);
