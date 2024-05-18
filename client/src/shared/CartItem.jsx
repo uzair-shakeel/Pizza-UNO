@@ -6,6 +6,7 @@ const CartItem = ({ cart, quantityChanges }) => {
   const { _id, userId, foodId, photo, foodName, price, quantity } = cart;
   const [newQuantity, setNewQuantity] = useState(quantity);
   const deleveryCharges = 1.99;
+  const total = (price * newQuantity + deleveryCharges).toFixed(2);
 
   const handleQuantityChange = async (action) => {
     try {
@@ -89,19 +90,19 @@ const CartItem = ({ cart, quantityChanges }) => {
 
   const handleRemove = async (_id) => {
     try {
-       const token = localStorage.getItem("token");
-       if (!token) {
-         throw new Error("Token not found in cookies");
-       }
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token not found in cookies");
+      }
 
-       const headers = {
-         "Content-Type": "application/json",
-         Authorization: `Bearer ${token}`,
-       };
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
       const response = await fetch(`${BASE_URL}/cart/${_id}`, {
         method: "DELETE",
         credentials: "include",
-        headers: headers
+        headers: headers,
       });
 
       const { message } = await response.json();
@@ -158,7 +159,7 @@ const CartItem = ({ cart, quantityChanges }) => {
           </div>
         </div>
       </td>
-      <td>£{price * newQuantity + deleveryCharges}</td>
+      <td>£{total}</td>
 
       <td className="text-center">
         <button
