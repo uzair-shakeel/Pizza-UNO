@@ -29,7 +29,7 @@ const FoodDetaill = () => {
 
   const { totalRating, avgRating } = calculateAvgRating(food?.reviews);
   const deleveryCharges = 1.99;
-  const TotalAmount = (quantity * food?.price + deliveryCharges).toFixed(2);
+  const TotalAmount = (quantity * food?.price + deleveryCharges).toFixed(2);
   const options = { day: "numeric", month: "long", year: "numeric" };
 
   const useFetch2 = (url) => {
