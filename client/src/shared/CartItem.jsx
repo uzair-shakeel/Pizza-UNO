@@ -25,12 +25,19 @@ const CartItem = ({ cart, quantityChanges }) => {
         foodId: foodId,
         quantity: updatedQuantity,
       };
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token not found in cookies");
+      }
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
 
       const response = await fetch(`${BASE_URL}/cart/quantity`, {
         method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
+        headers: headers,
         credentials: "include",
         body: JSON.stringify(cartItem),
       });
@@ -60,12 +67,19 @@ const CartItem = ({ cart, quantityChanges }) => {
           foodId: foodId,
           quantity: enteredValue,
         };
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token not found in cookies");
+        }
+
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
 
         const response = await fetch(`${BASE_URL}/cart/quantity`, {
           method: "PUT",
-          headers: {
-            "content-type": "application/json",
-          },
+          headers: headers,
           credentials: "include",
           body: JSON.stringify(cartItem),
         });
